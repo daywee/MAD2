@@ -11,7 +11,8 @@ namespace Lesson01
             var data = dl.LoadData("../../../Datasets/Iris/iris.data");
             //var data = dl.LoadData("../../../Datasets/Iris/iris.data").Take(10).ToList();
             var converter = new GraphConverter();
-            var graph = converter.ERadiusConvert(data, 0.75);
+            //var graph = converter.ConvertUsingERadius(data, 0.75);
+            var graph = converter.ConvertUsingKnn(data, 5);
             var exporter = new GraphExporter();
             //exporter.ExportToPajak(graph, "../../../Datasets/Iris/epsilonIris.net");
             exporter.ExportToCsv(graph, "../../../Datasets/Iris/epsilonIris.csv");
