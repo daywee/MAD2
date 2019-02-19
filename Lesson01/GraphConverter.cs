@@ -48,6 +48,58 @@ namespace Lesson01
                 }
             }
 
+            vertices.ForEach(e => e.Neighbors = e.Neighbors.Distinct().ToList());
+
+            return new Graph.Graph(vertices);
+        }
+
+        public Graph.Graph ConvertUsingERadiusWithKnn(List<Row> rows, double epsilon, int k)
+        {
+            var similarityMatrix = GetSimilarityMatrix(rows.Select(e => e.ToVector()).ToList());
+            var vertices = rows.Select((_, id) => new Vertex(id)).ToList();
+
+            for (int i = 0; i < similarityMatrix.Dimension; i++)
+            {
+                var verticesToAdd = new List<(Vertex, Vertex)>();
+                for (int j = 0; j < similarityMatrix.Dimension; j++)
+                {
+                    if (i == j)
+                        continue;
+
+                    double similarity = similarityMatrix[i, j];
+                    if (similarity > epsilon)
+                    {
+                        var v1 = vertices[i];
+                        var v2 = vertices[j];
+                        verticesToAdd.Add((v1, v2));
+                    }
+                }
+
+                if (verticesToAdd.Count > k)
+                {
+                    // use KNN if more edges then K would be added
+                    var nearest = similarityMatrix.GetKNearest(i, k);
+                    foreach (var item in nearest)
+                    {
+                        var v1 = vertices[i];
+                        var v2 = vertices[item];
+                        v1.Neighbors.Add(v2);
+                        v2.Neighbors.Add(v1);
+                    }
+                }
+                else
+                {
+                    // otherwise use e-radius
+                    foreach (var (v1,v2) in verticesToAdd)
+                    {
+                        v1.Neighbors.Add(v2);
+                        v2.Neighbors.Add(v1);
+                    }
+                }
+            }
+
+            vertices.ForEach(e => e.Neighbors = e.Neighbors.Distinct().ToList());
+
             return new Graph.Graph(vertices);
         }
 
