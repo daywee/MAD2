@@ -16,36 +16,46 @@ namespace Lesson03.Graph.Clustering
             var group2 = shuffled.Skip(shuffled.Count / 2).ToList();
 
             int initialCutSize = GetCutSize(group1, group2);
-            int bestCutSize = int.MaxValue;
+            
             List<Vertex> bestNewGroup1 = null;
             List<Vertex> bestNewGroup2 = null;
             Vertex bestSwappedFromGroup1 = null;
             Vertex bestSwappedFromGroup2 = null;
             var swappedVertices = new List<Vertex>();
-
-
-            foreach (var v1 in group1)
+            var allStates = new Dictionary<int, (List<Vertex>, List<Vertex>)>();
+            // steps
+            while (swappedVertices.Count < shuffled.Count)
             {
-                foreach (var v2 in group2)
+                int bestCutSize = int.MaxValue;
+
+                foreach (var v1 in group1)
                 {
-                    var newGroup1 = group1.Except(new[] { v1 }).Concat(new[] { v2 }).ToList();
-                    var newGroup2 = group1.Except(new[] { v2 }).Concat(new[] { v1 }).ToList();
-                    int newCutSize = GetCutSize(newGroup1, newGroup2);
-                    if (newCutSize < bestCutSize)
+                    if (swappedVertices.Contains(v1))
+                        continue;
+                    foreach (var v2 in group2)
                     {
-                        bestCutSize = newCutSize;
-                        bestNewGroup1 = newGroup1;
-                        bestNewGroup2 = newGroup2;
-                        bestSwappedFromGroup1 = v1;
-                        bestSwappedFromGroup2 = v2;
+                        if (swappedVertices.Contains(v2))
+                            continue;
+
+                        var newGroup1 = group1.Except(new[] { v1 }).Concat(new[] { v2 }).ToList();
+                        var newGroup2 = group2.Except(new[] { v2 }).Concat(new[] { v1 }).ToList();
+                        int newCutSize = GetCutSize(newGroup1, newGroup2);
+                        if (newCutSize < bestCutSize)
+                        {
+                            bestCutSize = newCutSize;
+                            bestNewGroup1 = newGroup1;
+                            bestNewGroup2 = newGroup2;
+                            bestSwappedFromGroup1 = v1;
+                            bestSwappedFromGroup2 = v2;
+                        }
                     }
                 }
+                allStates.Add(bestCutSize, (bestNewGroup1, bestNewGroup2));
+                group1 = bestNewGroup1;
+                group2 = bestNewGroup2;
+                swappedVertices.Add(bestSwappedFromGroup1);
+                swappedVertices.Add(bestSwappedFromGroup2);
             }
-
-            group1 = bestNewGroup1;
-            group2 = bestNewGroup2;
-            swappedVertices.Add(bestSwappedFromGroup1);
-            swappedVertices.Add(bestSwappedFromGroup2);
 
         }
 
