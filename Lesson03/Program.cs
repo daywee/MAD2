@@ -10,7 +10,9 @@ namespace Lesson03
             var gl = new GraphLoader();
             var graph = gl.LoadFromCsvFile("../../../Datasets/KarateClub/KarateClub.csv");
             var kl = new KernighanLin();
-            kl.Cluster(graph);
+            var clusteredGraph = kl.Cluster(graph);
+            var exporter = new GraphExporter();
+            exporter.ExportToCsv(clusteredGraph, "../../../Datasets/KarateClub/KarateClubClustered.csv");
         }
     }
 }

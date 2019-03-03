@@ -22,18 +22,27 @@ namespace Lesson03.Graph
             Name = vertex.Name;
         }
 
-        public void AddNeighborBiDirection(Vertex vertex)
-        {
-            if (!Neighbors.Contains(vertex))
-                Neighbors.Add(vertex);
-            if (!vertex.Neighbors.Contains(this))
-                vertex.Neighbors.Add(this);
-        }
-
         public void AddNeighbor(Vertex vertex)
         {
             if (!Neighbors.Contains(vertex))
                 Neighbors.Add(vertex);
+        }
+
+        public void AddNeighborBiDirection(Vertex vertex)
+        {
+            AddNeighbor(vertex);
+            vertex.AddNeighbor(this);
+        }
+
+        public void RemoveNeighbor(Vertex vertex)
+        {
+            Neighbors.Remove(vertex);
+        }
+
+        public void RemoveNeighborBiDirection(Vertex vertex)
+        {
+            RemoveNeighbor(vertex);
+            vertex.RemoveNeighbor(this);
         }
 
         public override string ToString()

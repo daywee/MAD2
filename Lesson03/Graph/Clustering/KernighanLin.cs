@@ -8,9 +8,10 @@ namespace Lesson03.Graph.Clustering
     {
         private readonly Random _random = new Random(0);
 
-        public void Cluster(Graph graph)
+        public Graph Cluster(Graph graph)
         {
-            var shuffled = graph.Vertices.OrderBy(e => Guid.NewGuid()).ToList();
+            var clone = graph.Clone();
+            var shuffled = clone.Vertices.OrderBy(e => Guid.NewGuid()).ToList();
 
             var group1 = shuffled.Take(shuffled.Count / 2).ToList();
             var group2 = shuffled.Skip(shuffled.Count / 2).ToList();
@@ -73,8 +74,9 @@ namespace Lesson03.Graph.Clustering
                 group2 = g2;
             } while (currentRun < bestRun);
 
+            RemoveClusteredEdges(group1, group2);
 
-
+            return new Graph(group1.Concat(group2).ToList());
         }
 
         private int GetCutSize(List<Vertex> firstGroup, List<Vertex> secondGroup)
@@ -90,6 +92,18 @@ namespace Lesson03.Graph.Clustering
             }
 
             return cutSize;
+        }
+
+        private void RemoveClusteredEdges(List<Vertex> group1, List<Vertex> group2)
+        {
+            foreach (var vertex in group1)
+            {
+                var mutualVertices = vertex.Neighbors.Intersect(group2).ToList();
+                foreach (var v in mutualVertices)
+                {
+                    vertex.RemoveNeighborBiDirection(v);
+                }
+            }
         }
     }
 }

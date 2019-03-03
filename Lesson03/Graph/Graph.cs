@@ -123,5 +123,22 @@ namespace Lesson03.Graph
         {
             return (float)Vertices.Sum(e => e.Degree) / Vertices.Count;
         }
+
+        public Graph Clone()
+        {
+            var newVertices = Vertices.Select(e => new Vertex(e)).ToDictionary(e => e.Id);
+
+            foreach (var vertex in Vertices)
+            {
+                var newVertex = newVertices[vertex.Id];
+                foreach (var neighbor in vertex.Neighbors)
+                {
+                    var newNeighbor = newVertices[neighbor.Id];
+                    newVertex.AddNeighborBiDirection(newNeighbor);
+                }
+            }
+
+            return new Graph(newVertices.Values.ToList());
+        }
     }
 }
