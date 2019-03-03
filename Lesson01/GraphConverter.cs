@@ -75,7 +75,7 @@ namespace Lesson01
                     }
                 }
 
-                if (verticesToAdd.Count > k)
+                if (verticesToAdd.Count < k)
                 {
                     // use KNN if more edges then K would be added
                     var nearest = similarityMatrix.GetKNearest(i, k);
