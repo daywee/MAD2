@@ -11,18 +11,13 @@ namespace Lesson03.Graph.Clustering
         public Graph Cluster(Graph graph)
         {
             var clone = graph.Clone();
-            var shuffled = clone.Vertices.OrderBy(e => Guid.NewGuid()).ToList();
 
+            // divide vertices into two random groups
+            var shuffled = clone.Vertices.OrderBy(e => _random.Next()).ToList();
             var group1 = shuffled.Take(shuffled.Count / 2).ToList();
             var group2 = shuffled.Skip(shuffled.Count / 2).ToList();
 
             int initialCutSize = GetCutSize(group1, group2);
-
-            List<Vertex> bestNewGroup1 = null;
-            List<Vertex> bestNewGroup2 = null;
-            Vertex bestSwappedFromGroup1 = null;
-            Vertex bestSwappedFromGroup2 = null;
-            var swappedVertices = new List<Vertex>();
             int bestRun = initialCutSize;
             int currentRun = bestRun;
 
@@ -30,10 +25,16 @@ namespace Lesson03.Graph.Clustering
             {
                 bestRun = currentRun;
                 var allStates = new Dictionary<int, (List<Vertex>, List<Vertex>)>();
+                var swappedVertices = new List<Vertex>();
+
                 // steps
                 while (swappedVertices.Count < shuffled.Count)
                 {
                     int bestCutSize = int.MaxValue;
+                    Vertex bestSwappedFromGroup1 = null;
+                    Vertex bestSwappedFromGroup2 = null;
+                    List<Vertex> bestNewGroup1 = null;
+                    List<Vertex> bestNewGroup2 = null;
 
                     foreach (var v1 in group1)
                     {
@@ -64,8 +65,6 @@ namespace Lesson03.Graph.Clustering
                     swappedVertices.Add(bestSwappedFromGroup1);
                     swappedVertices.Add(bestSwappedFromGroup2);
                 }
-
-                swappedVertices = new List<Vertex>();
 
                 var bestState = allStates.OrderBy(e => e.Key).First();
                 currentRun = bestState.Key;
