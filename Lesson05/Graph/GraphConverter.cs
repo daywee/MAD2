@@ -102,9 +102,9 @@ namespace Lesson05.Graph
             return new Graph(vertices);
         }
 
-        private Matrix GetSimilarityMatrix(List<Vector> vectors)
+        private Matrix.Matrix GetSimilarityMatrix(List<Vector> vectors)
         {
-            var similarityMatrix = new Matrix(vectors.Count);
+            var similarityMatrix = new Matrix.Matrix(vectors.Count);
             for (int i = 0; i < vectors.Count; i++)
             {
                 for (int j = i + 1; j < vectors.Count; j++)

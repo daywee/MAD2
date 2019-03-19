@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graph\Clustering\HierarchicalAgglomerativeClusterer.cs" />
+    <Compile Include="Matrix\AdjacencyMatrix.cs" />
     <Compile Include="DataLoader.cs" />
     <Compile Include="Graph\Clustering\KernighanLin.cs" />
     <Compile Include="Graph\Graph.cs" />
@@ -58,10 +60,11 @@
     <Compile Include="Graph\GraphLoader.cs" />
     <Compile Include="Graph\Vertex.cs" />
     <Compile Include="IVectorConvertable.cs" />
-    <Compile Include="Matrix.cs" />
+    <Compile Include="Matrix\Matrix.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Row.cs" />
+    <Compile Include="Matrix\SimilarityMatrix.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Vector.cs" />
   </ItemGroup>
@@ -69,5 +72,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

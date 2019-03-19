@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MoreLinq.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using MoreLinq.Extensions;
 
 namespace Lesson05.Graph
 {
@@ -130,9 +130,9 @@ namespace Lesson05.Graph
             Vertices.ForEach((e, i) => e.Id = i);
         }
 
-        public Matrix GetAdjacencyMatrix()
+        public Matrix.AdjacencyMatrix GetAdjacencyMatrix()
         {
-            var matrix = new Matrix(Vertices.Count);
+            var matrix = new Matrix.AdjacencyMatrix(Vertices.Count);
             foreach (var v1 in Vertices)
             {
                 foreach (var v2 in Vertices)
@@ -162,6 +162,41 @@ namespace Lesson05.Graph
             }
 
             return new Graph(newVertices.Values.ToList());
+        }
+
+        public Vertex MergeVertices(int id1, int id2)
+        {
+            var v1 = Vertices.SingleOrDefault(e => e.Id == id1);
+            var v2 = Vertices.SingleOrDefault(e => e.Id == id2);
+
+            if (v1 == null)
+                throw new Exception($"Vertex '{id1}' not found");
+            if (v2 == null)
+                throw new Exception($"Vertex '{id2}' not found");
+
+            int maxId = Vertices.Select(e => e.Id).Max();
+            var merged = new Vertex(maxId + 1);
+
+            // add all neighbors
+            foreach (var neighbor in v1.Neighbors.ToList())
+                merged.AddNeighborBiDirection(neighbor);
+            foreach (var neighbor in v2.Neighbors.ToList())
+                merged.AddNeighborBiDirection(neighbor);
+
+            // remove old neighbor references from graph
+            foreach (var neighbor in v1.Neighbors.ToList())
+                v1.RemoveNeighborBiDirection(neighbor);
+            foreach (var neighbor in v2.Neighbors.ToList())
+                v2.RemoveNeighborBiDirection(neighbor);
+
+            merged.IdsBeforeMerge.AddRange(v1.IdsBeforeMerge);
+            merged.IdsBeforeMerge.AddRange(v2.IdsBeforeMerge);
+
+            Vertices.Remove(v1);
+            Vertices.Remove(v2);
+            Vertices.Add(merged);
+
+            return merged;
         }
     }
 }

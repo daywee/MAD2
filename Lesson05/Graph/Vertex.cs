@@ -5,6 +5,7 @@ namespace Lesson05.Graph
     public class Vertex
     {
         public int Id { get; set; }
+        public List<int> IdsBeforeMerge { get; set; } = new List<int>();
         public string Name { get; set; }
         public float ClusteringCoefficient { get; set; }
 
