@@ -22,16 +22,20 @@ namespace Lesson04.Graph
             Name = vertex.Name;
         }
 
-        public void AddNeighbor(Vertex vertex)
+        public bool AddNeighbor(Vertex vertex)
         {
             if (!Neighbors.Contains(vertex))
+            {
                 Neighbors.Add(vertex);
+                return true;
+            }
+
+            return false;
         }
 
-        public void AddNeighborBiDirection(Vertex vertex)
+        public bool AddNeighborBiDirection(Vertex vertex)
         {
-            AddNeighbor(vertex);
-            vertex.AddNeighbor(this);
+            return AddNeighbor(vertex) && vertex.AddNeighbor(this);
         }
 
         public void RemoveNeighbor(Vertex vertex)

@@ -1,5 +1,4 @@
 ﻿using Lesson04.Graph;
-using Lesson04.Graph.Clustering;
 
 namespace Lesson04
 {
@@ -7,12 +6,13 @@ namespace Lesson04
     {
         static void Main(string[] args)
         {
-            var gl = new GraphLoader();
-            var graph = gl.LoadFromCsvFile("../../../Datasets/KarateClub/KarateClub.csv");
-            var kl = new KernighanLin();
-            var clusteredGraph = kl.Cluster(graph);
+            var gg = new GraphGenerator();
+            //var basic = gg.GenerateBasicModel(1000, 10, 2, 0.97);
+            var holmeKim = gg.GenerateHolmeKimModel(300, 10, 2, 0.9);
+
             var exporter = new GraphExporter();
-            exporter.ExportToCsv(clusteredGraph, "../../../Datasets/KarateClub/KarateClubClustered.csv");
+            //exporter.ExportToCsv(basic, "../../../Datasets/basicGraph.csv");
+            exporter.ExportToCsv(holmeKim, "../../../Datasets/holmeKim.csv");
         }
     }
 }
