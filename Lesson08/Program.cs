@@ -1,5 +1,4 @@
 ﻿using Lesson08.Graph;
-using Lesson08.Graph.Clustering;
 
 namespace Lesson08
 {
@@ -7,15 +6,13 @@ namespace Lesson08
     {
         static void Main(string[] args)
         {
-            var gl = new GraphLoader();
-            var graph = gl.LoadFromCsvFile("../../../Datasets/KarateClub/KarateClub.csv");
-            graph.NormalizeIds();
+            var gg = new GraphGenerator();
+            var lsm = gg.GenerateLinkSelectionModel(500);
+            var cm = gg.GenerateCopyingModel(500, 0.5);
 
-            var clusterer = new KCoreClusterer();
-            clusterer.Cluster(graph, 1);
-            clusterer.Cluster(graph, 2);
-            clusterer.Cluster(graph, 3);
-            clusterer.Cluster(graph, 4);
+            var exporter = new GraphExporter();
+            exporter.ExportToCsv(lsm, "../../../Datasets/lsm.csv");
+            exporter.ExportToCsv(cm, "../../../Datasets/cm.csv");
         }
     }
 }

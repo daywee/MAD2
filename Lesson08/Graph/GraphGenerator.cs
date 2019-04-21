@@ -147,7 +147,7 @@ namespace Lesson08.Graph
                         while (usedNodeIds.Contains(vertexDegreeDistribution[randomIndex]))
                             randomIndex = _random.Next(vertexDegreeDistribution.Count - 1);
 
-                         newNeighbor = vertices.Single(e => e.Id == vertexDegreeDistribution[randomIndex]);
+                        newNeighbor = vertices.Single(e => e.Id == vertexDegreeDistribution[randomIndex]);
                         bool isAdded = newNeighbor.AddNeighborBiDirection(vertex);
                         usedNodeIds.Add(vertexDegreeDistribution[randomIndex]);
                     }
@@ -203,13 +203,13 @@ namespace Lesson08.Graph
                 Vertex r1, r2;
                 if (_random.NextDouble() < p)
                 {
-                    var neighborhood = randomNode.Neighbors.Except(new[] {randomNode}).ToList();
+                    var neighborhood = randomNode.Neighbors.Except(new[] { randomNode }).ToList();
                     if (neighborhood.Count == 0)
                     {
                         var randomNeighbor2 = vertices.Except(new[] { randomNode }).ToList()[_random.Next(vertices.Count - 1)];
                         randomNeighbor2.AddNeighborBiDirection(newVertex);
                     }
-                    var randomNeighbor = neighborhood[_random.Next(randomNode.Degree-1)];
+                    var randomNeighbor = neighborhood[_random.Next(randomNode.Degree - 1)];
                     randomNeighbor.AddNeighborBiDirection(newVertex);
                     r1 = randomNeighbor;
                 }
@@ -218,6 +218,73 @@ namespace Lesson08.Graph
                     var randomNeighbor = vertices.Except(new[] { randomNode }).ToList()[_random.Next(vertices.Count - 1)];
                     randomNeighbor.AddNeighborBiDirection(newVertex);
                     r2 = randomNeighbor;
+                }
+
+                vertices.Add(newVertex);
+            }
+
+            return new Graph(vertices);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="n">Number of vertices</param>
+        /// <returns></returns>
+        public Graph GenerateLinkSelectionModel(int n)
+        {
+            var vertices = new List<Vertex> { new Vertex(0), new Vertex(1) };
+            var edges = new List<(Vertex, Vertex)> { (vertices[0], vertices[1]) };
+            vertices[0].AddNeighborBiDirection(vertices[1]);
+
+            for (int i = 2; i < n; i++)
+            {
+                var newVertex = new Vertex(i);
+
+                var randomEdge = edges[_random.Next(edges.Count - 1)];
+
+                if (_random.NextDouble() > 0.5)
+                {
+                    newVertex.AddNeighborBiDirection(randomEdge.Item1);
+                    edges.Add((newVertex, randomEdge.Item1));
+                }
+                else
+                {
+                    newVertex.AddNeighborBiDirection(randomEdge.Item2);
+                    edges.Add((newVertex, randomEdge.Item2));
+                }
+
+                vertices.Add(newVertex);
+            }
+
+            return new Graph(vertices);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="n">Number of vertices</param>
+        /// <param name="p">Probability of connecting a new vertex X with randomly chosen vertex V. 1 - p probability of connecting with neighbor V</param>
+        /// <returns></returns>
+        public Graph GenerateCopyingModel(int n, double p)
+        {
+            var vertices = new List<Vertex> { new Vertex(0), new Vertex(1) };
+            vertices[0].AddNeighborBiDirection(vertices[1]);
+
+            for (int i = 2; i < n; i++)
+            {
+                var newVertex = new Vertex(i);
+
+                var randomConnection = vertices[_random.Next(vertices.Count - 1)];
+
+                if (_random.NextDouble() < p)
+                {
+                    randomConnection.AddNeighborBiDirection(newVertex);
+                }
+                else
+                {
+                    var randomNeighborOfRandomConnection = randomConnection.Neighbors[_random.Next(randomConnection.Degree - 1)];
+                    randomNeighborOfRandomConnection.AddNeighborBiDirection(newVertex);
                 }
 
                 vertices.Add(newVertex);
