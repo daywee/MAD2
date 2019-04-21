@@ -64,5 +64,33 @@ namespace Lesson07B.Graph
 
             return new Graph(vertices.Values.ToList());
         }
+
+        public Graph LoadFromEdgeListFile(string path)
+        {
+            string file = File.ReadAllText(path);
+
+            var data = file.Split('\n')
+                .Select(line => line.Split(new char[0], StringSplitOptions.RemoveEmptyEntries))
+                .Where(e => e.Length > 0)
+                .Select(e => new[] { int.Parse(e[0]), int.Parse(e[1]) })
+                .ToList();
+
+            var maxIndex = data.SelectMany(e => e, (ints, i) => i).Max();
+
+            var vertices = Enumerable.Range(0, maxIndex + 1)
+                .Select(e => new Vertex(e))
+                .ToDictionary(e => e.Id);
+
+            foreach (var row in data)
+            {
+                var a = vertices[row[0]];
+                var b = vertices[row[1]];
+
+                a.Neighbors.Add(b);
+                b.Neighbors.Add(a);
+            }
+
+            return new Graph(vertices.Values.ToList());
+        }
     }
 }
