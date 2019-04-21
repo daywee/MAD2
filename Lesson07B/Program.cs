@@ -1,4 +1,5 @@
 ﻿using Lesson07B.Graph;
+using Lesson07B.Graph.EpidemicModeling;
 
 namespace Lesson07B
 {
@@ -6,13 +7,10 @@ namespace Lesson07B
     {
         static void Main(string[] args)
         {
-            var gg = new GraphGenerator();
-            var lsm = gg.GenerateLinkSelectionModel(500);
-            var cm = gg.GenerateCopyingModel(500, 0.5);
-
-            var exporter = new GraphExporter();
-            exporter.ExportToCsv(lsm, "../../../Datasets/lsm.csv");
-            exporter.ExportToCsv(cm, "../../../Datasets/cm.csv");
+            var gl = new GraphLoader();
+            var graph = gl.LoadFromCsvFile("../../../Datasets/KarateClub/KarateClub.csv");
+            var sm = new SirModel();
+            sm.Simulate(graph, 0.5, 3, 10);
         }
     }
 }

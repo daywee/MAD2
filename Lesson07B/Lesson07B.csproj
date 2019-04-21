@@ -53,6 +53,7 @@
     <Compile Include="Graph\Clustering\HierarchicalAgglomerativeClusterer.cs" />
     <Compile Include="Graph\Clustering\KCoreClusterer.cs" />
     <Compile Include="Graph\Clustering\KernighanLin.cs" />
+    <Compile Include="Graph\EpidemicModeling\SirModel.cs" />
     <Compile Include="Graph\Graph.cs" />
     <Compile Include="Graph\GraphConverter.cs" />
     <Compile Include="Graph\GraphExporter.cs" />
