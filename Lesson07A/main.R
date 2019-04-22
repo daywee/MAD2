@@ -20,6 +20,11 @@ airportCsv = read.csv('USairport500.csv', sep=';')
 airports = graph_from_data_frame(airportCsv, directed=F)
 plot(airports)
 
+# export graphs
+write_graph(erdos, 'erdos_export', format='edgelist')
+write_graph(barabasi, 'barabasi_export', format='edgelist')
+write_graph(airports, 'airports_export', format='edgelist')
+
 # 2. a)
 # number of components
 components(erdos)$no
