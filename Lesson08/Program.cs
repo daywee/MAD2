@@ -13,6 +13,11 @@ namespace Lesson08
             var exporter = new GraphExporter();
             exporter.ExportToCsv(lsm, "../../../Datasets/lsm.csv");
             exporter.ExportToCsv(cm, "../../../Datasets/cm.csv");
+
+            var agingPositive = gg.GenerateBarabasiAlbertModelWithAging(10, 2, 1, 10);
+            var agingNegative = gg.GenerateBarabasiAlbertModelWithAging(10, 2, 1, 10);
+            exporter.ExportToCsv(agingPositive, "../../../Exports/barabasiAgingPositive.csv");
+            exporter.ExportToCsv(agingNegative, "../../../Exports/barabasiAgingNegative.csv");
         }
     }
 }
