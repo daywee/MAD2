@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoreLinq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -102,6 +103,26 @@ namespace Lesson09.Graph
                 .ToList();
 
             return new MultilayerGraph(layers, actors, edges);
+        }
+
+        /// <summary>
+        /// Loads temporal graph from .tsv format
+        /// Each line has the form (t i j), where i and j are vertex ids and t is the interval during which this edge was active
+        /// </summary>
+        /// <param name="path">Path to file</param>
+        /// <returns></returns>
+        public TemporalGraph LoadTemporalGraph(string path)
+        {
+            var tsv = File.ReadAllText(path)
+                .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
+            var edgeList = tsv
+                .Select(e => e.Split('\t'))
+                .Select(e => (int.Parse(e[0]), int.Parse(e[1]), int.Parse(e[2])))
+                .ToList();
+
+            return new TemporalGraph(edgeList);
         }
     }
 }

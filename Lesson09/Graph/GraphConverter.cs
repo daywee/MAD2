@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Lesson09.Graph
@@ -115,6 +116,30 @@ namespace Lesson09.Graph
             }
 
             return similarityMatrix;
+        }
+
+        public MultilayerGraph ConvertTemporalToMultilayerGraph(TemporalGraph temporal, int numberOfLayers)
+        {
+            var layers = new List<string>();
+            var edges = new List<(string a1, string a2, string layer)>();
+
+            int interval = (temporal.MaxTime - temporal.MinTime) / numberOfLayers;
+            for (int i = 0; i < numberOfLayers; i++)
+            {
+                int @from = temporal.MinTime + i * interval;
+                int @to = temporal.MinTime + (i + 1) * interval;
+
+                string layerName = $"layer_{i}";
+                layers.Add(layerName);
+
+                var newEdges = temporal.EdgeList
+                    .Where(e => e.time >= @from && e.time < @to)
+                    .Select(e => (e.v1.ToString(), e.v2.ToString(), layerName));
+
+                edges.AddRange(newEdges);
+            }
+
+            return new MultilayerGraph(layers, temporal.VertexIds.Select(e => e.ToString()).ToList(), edges);
         }
     }
 }

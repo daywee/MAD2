@@ -60,6 +60,7 @@
     <Compile Include="Graph\GraphGenerator.cs" />
     <Compile Include="Graph\GraphLoader.cs" />
     <Compile Include="Graph\MultilayerGraph.cs" />
+    <Compile Include="Graph\TemporalGraph.cs" />
     <Compile Include="Graph\Vertex.cs" />
     <Compile Include="IVectorConvertable.cs" />
     <Compile Include="Matrix\AdjacencyMatrix.cs" />

@@ -11,6 +11,12 @@ namespace Lesson09
             var florentine = gl.LoadMultilayerGraph("../../../Datasets/Florentine/florentine.mpx");
 
             florentine.ActorNames.ForEach(e => florentine.PrintInfoAboutActor(e));
+
+            var gc = new GraphConverter();
+            var acmTemporal = gl.LoadTemporalGraph("../../../Datasets/ACM Hypertex 2009/ht09_contact_list.tsv");
+            var acmMultilayer = gc.ConvertTemporalToMultilayerGraph(acmTemporal, 5);
+
+            acmMultilayer.ActorNames.ForEach(e => acmMultilayer.PrintInfoAboutActor(e));
         }
     }
 }
