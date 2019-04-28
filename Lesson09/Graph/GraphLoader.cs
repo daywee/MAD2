@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -63,6 +64,44 @@ namespace Lesson09.Graph
             }
 
             return new Graph(vertices.Values.ToList());
+        }
+
+        /// <summary>
+        /// Loads multilayer graph from multiplex (.mpx) format
+        /// </summary>
+        /// <param name="path">Path to file</param>
+        /// <returns></returns>
+        public MultilayerGraph LoadMultilayerGraph(string path)
+        {
+            const string layersMark = "#LAYERS";
+            const string actorsMark = "#ACTORS";
+            const string edgesMark = "#EDGES";
+
+            var mpx = File.ReadAllText(path).Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
+
+            IEnumerable<string> GetSection(string mark)
+            {
+                int index = mpx.IndexOf(mark);
+                while (!string.IsNullOrWhiteSpace(mpx[++index]))
+                {
+                    yield return mpx[index];
+                }
+            }
+
+            var layers = GetSection(layersMark)
+                .Select(e => e.Split(',')[0])
+                .ToList();
+
+            var actors = GetSection(actorsMark)
+                .Select(e => e.Split(',')[0])
+                .ToList();
+
+            var edges = GetSection(edgesMark)
+                .Select(e => e.Split(','))
+                .Select(e => (e[0], e[1], e[2]))
+                .ToList();
+
+            return new MultilayerGraph(layers, actors, edges);
         }
     }
 }
