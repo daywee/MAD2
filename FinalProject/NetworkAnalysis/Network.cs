@@ -6,6 +6,7 @@ namespace FinalProject.NetworkAnalysis
     public class Network
     {
         public IList<Node> Nodes { get; }
+        public int Edges => Nodes.Select(e => e.Neighbors.Count).Sum() / 2;
 
         public Network(IList<Node> nodes)
         {
