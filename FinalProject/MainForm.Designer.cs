@@ -46,6 +46,7 @@
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.buttonCreateNetworkFromCommunity = new System.Windows.Forms.Button();
             this.buttonExportNetworkToR = new System.Windows.Forms.Button();
+            this.buttonExportToCsv = new System.Windows.Forms.Button();
             this.groupBoxNetworks.SuspendLayout();
             this.groupBoxNetworkStats.SuspendLayout();
             this.groupBoxCommunities.SuspendLayout();
@@ -73,6 +74,7 @@
             // 
             // groupBoxNetworks
             // 
+            this.groupBoxNetworks.Controls.Add(this.buttonExportToCsv);
             this.groupBoxNetworks.Controls.Add(this.buttonExportNetworkToR);
             this.groupBoxNetworks.Controls.Add(this.checkBoxSkipFirstLine);
             this.groupBoxNetworks.Controls.Add(this.buttonDeleteNetwork);
@@ -218,6 +220,16 @@
             this.buttonExportNetworkToR.UseVisualStyleBackColor = true;
             this.buttonExportNetworkToR.Click += new System.EventHandler(this.buttonExportNetworkToR_Click);
             // 
+            // buttonExportToCsv
+            // 
+            this.buttonExportToCsv.Location = new System.Drawing.Point(114, 322);
+            this.buttonExportToCsv.Name = "buttonExportToCsv";
+            this.buttonExportToCsv.Size = new System.Drawing.Size(101, 23);
+            this.buttonExportToCsv.TabIndex = 7;
+            this.buttonExportToCsv.Text = "Export to CSV";
+            this.buttonExportToCsv.UseVisualStyleBackColor = true;
+            this.buttonExportToCsv.Click += new System.EventHandler(this.buttonExportToCsv_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -260,6 +272,7 @@
         private System.Windows.Forms.CheckBox checkBoxSkipFirstLine;
         private System.Windows.Forms.Button buttonCreateNetworkFromCommunity;
         private System.Windows.Forms.Button buttonExportNetworkToR;
+        private System.Windows.Forms.Button buttonExportToCsv;
     }
 }
 

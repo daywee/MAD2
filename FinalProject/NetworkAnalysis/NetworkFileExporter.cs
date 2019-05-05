@@ -39,5 +39,21 @@ namespace FinalProject.NetworkAnalysis
 
             File.WriteAllText(path, sb.ToString());
         }
+
+        public static void ExportNetworkToCsv(string path, Network network)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Source,Target");
+
+            var usedNodes = new List<Node>();
+            foreach (var n1 in network.Nodes)
+            {
+                usedNodes.Add(n1);
+                foreach (var n2 in n1.Neighbors.Except(usedNodes))
+                    sb.AppendLine($"{n1.Id},{n2.Id}");
+            }
+
+            File.WriteAllText(path, sb.ToString());
+        }
     }
 }

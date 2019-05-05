@@ -1,6 +1,5 @@
 ﻿using FinalProject.Services.MainForm;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -105,16 +104,16 @@ namespace FinalProject
                 listViewCommunities.Items.Clear();
 
                 var items = network.Communities
-                    .Select(e => new ListViewItem(e.Id.ToString()) {SubItems = {e.Nodes.Count.ToString()}})
+                    .Select(e => new ListViewItem(e.Id.ToString()) { SubItems = { e.Nodes.Count.ToString() } })
                     .ToArray();
 
                 listViewCommunities.Items.AddRange(items);
             }
 
             if (listViewCommunities.InvokeRequired)
-                listViewCommunities.Invoke((MethodInvoker) Update);
+                listViewCommunities.Invoke((MethodInvoker)Update);
             else
-            Update();
+                Update();
         }
 
         #endregion
@@ -152,7 +151,7 @@ namespace FinalProject
 
         private void buttonCreateNetworkFromCommunity_Click(object sender, EventArgs e)
         {
-            string network = (string) listNetworks.SelectedItem;
+            string network = (string)listNetworks.SelectedItem;
             if (listViewCommunities.SelectedItems.Count > 0)
             {
                 string community = listViewCommunities.SelectedItems[0].Text;
@@ -164,10 +163,24 @@ namespace FinalProject
         {
             if (listNetworks.SelectedItem != null)
             {
-                var dialog = new SaveFileDialog();
+                var dialog = new SaveFileDialog { Filter = "R Script|*.R", DefaultExt = "R", AddExtension = true };
+
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     _service.ExportNetworkToR(dialog.FileName, (string)listNetworks.SelectedItem);
+                }
+            }
+        }
+
+        private void buttonExportToCsv_Click(object sender, EventArgs e)
+        {
+            if (listNetworks.SelectedItem != null)
+            {
+                var dialog = new SaveFileDialog { Filter = "CSV|*.csv", DefaultExt = "csv", AddExtension = true };
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    _service.ExportNetworkToCsv(dialog.FileName, (string)listNetworks.SelectedItem);
                 }
             }
         }
