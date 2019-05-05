@@ -64,8 +64,10 @@ namespace FinalProject
 
         private void HandleNetworkStatsUpdate(NetworkWrapper network)
         {
-            listViewStats.Invoke((MethodInvoker)delegate
+            void Update()
             {
+                listViewStats.Items.Clear();
+
                 var i1 = new ListViewItem("Vertices");
                 i1.SubItems.Add(network.Stats.Nodes.ToString());
 
@@ -85,7 +87,12 @@ namespace FinalProject
                 i6.SubItems.Add(network.Stats.ClusteringCoefficient.ToString(DoubleFormat));
 
                 listViewStats.Items.AddRange(new[] { i1, i2, i3, i4, i5, i6 });
-            });
+            }
+
+            if (listViewStats.InvokeRequired)
+                listViewStats.Invoke((MethodInvoker)Update);
+            else
+                Update();
         }
 
         #endregion
@@ -105,6 +112,12 @@ namespace FinalProject
         private void buttonDeleteNetwork_Click(object sender, EventArgs e)
         {
             _service.RemoveNetwork((string)listNetworks.SelectedItem);
+        }
+
+        private void listNetworks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var network = _service.GetNetwork((string)listNetworks.SelectedItem);
+            HandleNetworkStatsUpdate(network);
         }
 
         #endregion

@@ -31,19 +31,19 @@
             this.listNetworks = new System.Windows.Forms.ListBox();
             this.buttonLoadNetwork = new System.Windows.Forms.Button();
             this.groupBoxNetworks = new System.Windows.Forms.GroupBox();
+            this.checkBoxSkipFirstLine = new System.Windows.Forms.CheckBox();
             this.buttonDeleteNetwork = new System.Windows.Forms.Button();
             this.groupBoxNetworkStats = new System.Windows.Forms.GroupBox();
             this.listViewStats = new System.Windows.Forms.ListView();
             this.type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBoxCommunities = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.listViewCommunities = new System.Windows.Forms.ListView();
             this.id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.vertices = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.button1 = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.checkBoxSkipFirstLine = new System.Windows.Forms.CheckBox();
             this.groupBoxNetworks.SuspendLayout();
             this.groupBoxNetworkStats.SuspendLayout();
             this.groupBoxCommunities.SuspendLayout();
@@ -57,6 +57,7 @@
             this.listNetworks.Name = "listNetworks";
             this.listNetworks.Size = new System.Drawing.Size(208, 238);
             this.listNetworks.TabIndex = 0;
+            this.listNetworks.SelectedIndexChanged += new System.EventHandler(this.listNetworks_SelectedIndexChanged);
             // 
             // buttonLoadNetwork
             // 
@@ -80,6 +81,16 @@
             this.groupBoxNetworks.TabIndex = 2;
             this.groupBoxNetworks.TabStop = false;
             this.groupBoxNetworks.Text = "Networks";
+            // 
+            // checkBoxSkipFirstLine
+            // 
+            this.checkBoxSkipFirstLine.AutoSize = true;
+            this.checkBoxSkipFirstLine.Location = new System.Drawing.Point(6, 270);
+            this.checkBoxSkipFirstLine.Name = "checkBoxSkipFirstLine";
+            this.checkBoxSkipFirstLine.Size = new System.Drawing.Size(85, 17);
+            this.checkBoxSkipFirstLine.TabIndex = 6;
+            this.checkBoxSkipFirstLine.Text = "Skip first line";
+            this.checkBoxSkipFirstLine.UseVisualStyleBackColor = true;
             // 
             // buttonDeleteNetwork
             // 
@@ -135,6 +146,15 @@
             this.groupBoxCommunities.TabStop = false;
             this.groupBoxCommunities.Text = "Communities";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(21, 31);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // listViewCommunities
             // 
             this.listViewCommunities.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -155,15 +175,6 @@
             // 
             this.vertices.Text = "Vertices";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(21, 31);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -178,16 +189,6 @@
             // 
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
-            // 
-            // checkBoxSkipFirstLine
-            // 
-            this.checkBoxSkipFirstLine.AutoSize = true;
-            this.checkBoxSkipFirstLine.Location = new System.Drawing.Point(6, 270);
-            this.checkBoxSkipFirstLine.Name = "checkBoxSkipFirstLine";
-            this.checkBoxSkipFirstLine.Size = new System.Drawing.Size(85, 17);
-            this.checkBoxSkipFirstLine.TabIndex = 6;
-            this.checkBoxSkipFirstLine.Text = "Skip first line";
-            this.checkBoxSkipFirstLine.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

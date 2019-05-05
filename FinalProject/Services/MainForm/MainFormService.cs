@@ -24,6 +24,11 @@ namespace FinalProject.Services.MainForm
             OnNetworkAdd += LoadStats;
         }
 
+        public NetworkWrapper GetNetwork(string name)
+        {
+            return Networks.Single(e => e.Name == name);
+        }
+
         public void LoadNetwork(string path, int rowsToSkip)
         {
             RunWithProgressBar(() =>
@@ -52,8 +57,15 @@ namespace FinalProject.Services.MainForm
         {
             RunWithProgressBar(() =>
             {
-                network.Stats.DegreeCentrality = network.Network.GetAverageDegree();
+                network.Network.ComputeClusteringCoefficient();
                 network.Stats.ClusteringCoefficient = network.Network.GetGlobalClusteringCoefficient();
+
+                OnNetworkStatsUpdate?.Invoke(network);
+            });
+
+            RunWithProgressBar(() =>
+            {
+                network.Stats.DegreeCentrality = network.Network.GetAverageDegree();
                 network.Stats.Edges = network.Network.Edges;
                 network.Stats.Nodes = network.Network.Nodes.Count;
 
