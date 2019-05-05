@@ -326,7 +326,7 @@
             // 
             this.numericNoCreatedEdges.Location = new System.Drawing.Point(144, 71);
             this.numericNoCreatedEdges.Minimum = new decimal(new int[] {
-            3,
+            1,
             0,
             0,
             0});

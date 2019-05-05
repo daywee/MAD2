@@ -14,6 +14,32 @@ namespace FinalProject.NetworkAnalysis
             Nodes = nodes;
         }
 
+        public int CountComponents()
+        {
+            var visited = new List<Node>();
+            var unvisited = Nodes.ToList();
+
+            void VisitNode(Node node)
+            {
+                visited.Add(node);
+                unvisited.Remove(node);
+                foreach (var neighbor in node.Neighbors)
+                {
+                    if (!visited.Contains(neighbor))
+                        VisitNode(neighbor);
+                }
+            }
+
+            int noComponents = 0;
+            while (unvisited.Any())
+            {
+                noComponents++;
+                VisitNode(unvisited.First());
+            }
+
+            return noComponents;
+        }
+
         public float GetGlobalClusteringCoefficient()
         {
             var sum = Nodes.Select(e => e.ClusteringCoefficient).Sum();

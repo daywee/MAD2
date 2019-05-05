@@ -155,6 +155,7 @@ namespace FinalProject.Services.MainForm
                 network.Stats.DegreeCentrality = network.Network.GetAverageDegree();
                 network.Stats.Edges = network.Network.Edges;
                 network.Stats.Nodes = network.Network.Nodes.Count;
+                network.Stats.Components = network.Network.CountComponents();
 
                 OnNetworkStatsUpdate?.Invoke(network);
             });

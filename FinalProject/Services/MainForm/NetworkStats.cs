@@ -9,5 +9,6 @@
         public double MeanDistance { get; set; }
         public double ClusteringCoefficient { get; set; }
         public int Diameter { get; set; }
+        public int Components { get; set; }
     }
 }

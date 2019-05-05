@@ -77,22 +77,25 @@ namespace FinalProject
                 var i2 = new ListViewItem("Edges");
                 i2.SubItems.Add(network.Stats.Edges.ToString());
 
-                var i3 = new ListViewItem("Degree centrality");
-                i3.SubItems.Add(network.Stats.DegreeCentrality.ToString(DoubleFormat));
+                var i3 = new ListViewItem("Components");
+                i3.SubItems.Add(network.Stats.Components.ToString());
 
-                var i4 = new ListViewItem("Closeness centrality");
-                i4.SubItems.Add(network.Stats.ClosenessCentrality.ToString(DoubleFormat));
+                var i4 = new ListViewItem("Degree centrality");
+                i4.SubItems.Add(network.Stats.DegreeCentrality.ToString(DoubleFormat));
 
-                var i5 = new ListViewItem("Mean distance");
-                i5.SubItems.Add(network.Stats.MeanDistance.ToString(DoubleFormat));
+                var i5 = new ListViewItem("Closeness centrality");
+                i5.SubItems.Add(network.Stats.ClosenessCentrality.ToString(DoubleFormat));
 
-                var i6 = new ListViewItem("Clustering coefficient");
-                i6.SubItems.Add(network.Stats.ClusteringCoefficient.ToString(DoubleFormat));
+                var i6 = new ListViewItem("Mean distance");
+                i6.SubItems.Add(network.Stats.MeanDistance.ToString(DoubleFormat));
 
-                var i7 = new ListViewItem("Diameter");
-                i7.SubItems.Add(network.Stats.Diameter.ToString());
+                var i7 = new ListViewItem("Clustering coefficient");
+                i7.SubItems.Add(network.Stats.ClusteringCoefficient.ToString(DoubleFormat));
 
-                listViewStats.Items.AddRange(new[] { i1, i2, i3, i4, i5, i6, i7 });
+                var i8 = new ListViewItem("Diameter");
+                i8.SubItems.Add(network.Stats.Diameter.ToString());
+
+                listViewStats.Items.AddRange(new[] { i1, i2, i3, i4, i5, i6, i7, i8 });
             }
 
             if (listViewStats.InvokeRequired)
