@@ -108,6 +108,7 @@ namespace FinalProject
                 listViewCommunities.Items.Clear();
 
                 var items = network.Communities
+                    .OrderByDescending(e => e.Nodes.Count)
                     .Select(e => new ListViewItem(e.Id.ToString()) { SubItems = { e.Nodes.Count.ToString() } })
                     .ToArray();
 

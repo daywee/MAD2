@@ -9,7 +9,7 @@ namespace FinalProject.NetworkAnalysis
 {
     public class NetworkFileLoader
     {
-        public (Network network, IncidenceMatrix incidenceMatrix) LoadHeroes(string path, int rowsToSkip = 0)
+        public (Network network, IncidenceMatrix incidenceMatrix) LoadNetwork(string path, int rowsToSkip = 0)
         {
             string csv = File.ReadAllText(path);
 

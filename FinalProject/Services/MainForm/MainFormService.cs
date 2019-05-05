@@ -40,7 +40,7 @@ namespace FinalProject.Services.MainForm
         {
             RunWithProgressBar(() =>
             {
-                var (network, incidenceMatrix) = _networkFileLoader.LoadHeroes(path, rowsToSkip);
+                var (network, incidenceMatrix) = _networkFileLoader.LoadNetwork(path, rowsToSkip);
                 string fileName = Path.GetFileNameWithoutExtension(path);
 
                 var wrapper = new NetworkWrapper(fileName, network, incidenceMatrix);
