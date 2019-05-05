@@ -18,15 +18,42 @@ namespace FinalProject
         {
             base.OnLoad(e);
 
+            toolStripProgressBar.ProgressBar.Style = ProgressBarStyle.Marquee;
+            toolStripProgressBar.ProgressBar.MarqueeAnimationSpeed = 20;
+            toolStripProgressBar.ProgressBar.Visible = false;
+
             _controller.OnNetworkAdd += HandleNetworkAdd;
             _controller.OnNetworkRemove += HandleNetworkRemove;
             _controller.OnNetworkStatsUpdate += HandleNetworkStatsUpdate;
+            _controller.ProgressBarService.OnProgressBarStart += HandleProgressBarStart;
+            _controller.ProgressBarService.OnProgressBarStop += HandleProgressBarStop;
+        }
+
+        #region Controller event handlers
+
+        private void HandleProgressBarStart()
+        {
+            toolStripProgressBar.ProgressBar.Invoke((MethodInvoker)delegate
+            {
+                toolStripProgressBar.ProgressBar.Visible = true;
+            });
+        }
+
+        private void HandleProgressBarStop()
+        {
+            toolStripProgressBar.ProgressBar.Invoke((MethodInvoker)delegate
+            {
+                toolStripProgressBar.ProgressBar.Visible = false;
+            });
         }
 
         private void HandleNetworkAdd(NetworkWrapper network)
         {
-            listNetworks.Items.Add(network.Name);
-            listNetworks.SelectedIndex = listNetworks.Items.Count - 1;
+            listNetworks.Invoke((MethodInvoker)delegate
+            {
+                listNetworks.Items.Add(network.Name);
+                listNetworks.SelectedIndex = listNetworks.Items.Count - 1;
+            });
         }
 
         private void HandleNetworkRemove(NetworkWrapper network)
@@ -56,17 +83,29 @@ namespace FinalProject
                 var i6 = new ListViewItem("Clustering coefficient");
                 i6.SubItems.Add(network.Stats.ClusteringCoefficient.ToString(DoubleFormat));
 
-                listViewStats.Items.AddRange(new[] {i1, i2, i3, i4, i5, i6 });
+                listViewStats.Items.AddRange(new[] { i1, i2, i3, i4, i5, i6 });
             });
         }
+
+        #endregion
+
+        #region Form event handlers
 
         private void buttonLoadNetwork_Click(object sender, EventArgs e)
         {
             var dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                _controller.LoadNetwork(dialog.FileName);
+                bool skip = checkBoxSkipFirstLine.Checked;
+                _controller.LoadNetwork(dialog.FileName, skip ? 1 : 0);
             }
         }
+
+        private void buttonDeleteNetwork_Click(object sender, EventArgs e)
+        {
+            _controller.RemoveNetwork((string)listNetworks.SelectedItem);
+        }
+
+        #endregion
     }
 }

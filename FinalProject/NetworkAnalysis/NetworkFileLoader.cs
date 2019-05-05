@@ -3,18 +3,50 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Csv;
 using FinalProject.NetworkAnalysis.CommunityDetection;
 
 namespace FinalProject.NetworkAnalysis
 {
     public class NetworkFileLoader
     {
-        public Network LoadFromCsvFile(string path, int firstId = 1, int skip = 0)
+        public Network LoadHeroes(string path, int rowsToSkip = 0)
+        {
+            string csv = File.ReadAllText(path);
+
+            var lines = CsvReader.ReadFromText(csv, new CsvOptions { RowsToSkip = rowsToSkip }).ToList();
+            var nameNodeDict = new Dictionary<string, Node>();
+
+            int id = 0;
+            foreach (var line in lines)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    string name = line.Values[i];
+                    if (!nameNodeDict.ContainsKey(name))
+                    {
+                        nameNodeDict.Add(name, new Node(id++) { Name = name });
+                    }
+                }
+            }
+
+            foreach (var line in lines)
+            {
+                var n1 = nameNodeDict[line.Values[0]];
+                var n2 = nameNodeDict[line.Values[1]];
+
+                n1.AddNeighborBiDirection(n2);
+            }
+
+            return new Network(nameNodeDict.Values.ToList());
+        }
+
+        public Network LoadFromCsvFile(string path, int firstId = 1, int rowsToSkip = 0)
         {
             string csv = File.ReadAllText(path);
 
             var data = csv.Split('\n')
-                .Skip(skip)
+                .Skip(rowsToSkip)
                 .Select(line => line.Split(new[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries))
                 .Where(e => e.Length > 0)
                 .Select(e => new[] { int.Parse(e[0]), int.Parse(e[1]) })
