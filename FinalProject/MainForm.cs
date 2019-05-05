@@ -89,7 +89,10 @@ namespace FinalProject
                 var i6 = new ListViewItem("Clustering coefficient");
                 i6.SubItems.Add(network.Stats.ClusteringCoefficient.ToString(DoubleFormat));
 
-                listViewStats.Items.AddRange(new[] { i1, i2, i3, i4, i5, i6 });
+                var i7 = new ListViewItem("Diameter");
+                i7.SubItems.Add(network.Stats.Diameter.ToString());
+
+                listViewStats.Items.AddRange(new[] { i1, i2, i3, i4, i5, i6, i7 });
             }
 
             if (listViewStats.InvokeRequired)

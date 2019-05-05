@@ -69,9 +69,8 @@ namespace FinalProject.NetworkAnalysis
                 throw new InvalidOperationException("Matrix dimensions must have same length");
 
             int length = matrix.GetLength(0);
-            var distanceVector = new double[length];
 
-                double sum = 0;
+            double sum = 0;
             for (int i = 0; i < length; i++)
             {
                 for (int j = 0; j < length; j++)
@@ -83,6 +82,19 @@ namespace FinalProject.NetworkAnalysis
             }
 
             return sum / (length * (length - 1));
+        }
+
+        public int GetDiameter()
+        {
+            int length = matrix.GetLength(0);
+
+            int max = 0;
+            for (int i = 0; i < length; i++)
+                for (int j = 0; j < length; j++)
+                    if (i != j && matrix[i, j] > max)
+                        max = matrix[i, j];
+
+            return max;
         }
 
         public Vector GetClosenessCentralityVector()

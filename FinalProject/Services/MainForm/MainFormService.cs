@@ -117,19 +117,23 @@ namespace FinalProject.Services.MainForm
 
         private void InitNetwork(NetworkWrapper network)
         {
-            RunWithProgressBar(() =>
-            {
-                network.Network.ComputeClusteringCoefficient();
-                network.Stats.ClusteringCoefficient = network.Network.GetGlobalClusteringCoefficient();
+            //RunWithProgressBar(() =>
+            //{
+            //    network.Network.ComputeClusteringCoefficient();
+            //    network.Stats.ClusteringCoefficient = network.Network.GetGlobalClusteringCoefficient();
 
-                OnNetworkStatsUpdate?.Invoke(network);
-            });
+            //    OnNetworkStatsUpdate?.Invoke(network);
+            //});
 
             RunWithProgressBar(() =>
             {
                 network.DistanceMatrix = network.IncidenceMatrix.GetDistanceMatrix();
                 network.Stats.MeanDistance = network.DistanceMatrix.GetMeanDistance();
                 network.Stats.ClosenessCentrality = network.DistanceMatrix.GetClosenessCentralityVector().Average;
+                network.Stats.Diameter = network.DistanceMatrix.GetDiameter();
+
+                network.Network.ComputeClusteringCoefficient();
+                network.Stats.ClusteringCoefficient = network.Network.GetGlobalClusteringCoefficient();
 
                 OnNetworkStatsUpdate?.Invoke(network);
             });

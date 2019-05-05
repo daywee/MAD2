@@ -8,5 +8,6 @@
         public double ClosenessCentrality { get; set; }
         public double MeanDistance { get; set; }
         public double ClusteringCoefficient { get; set; }
+        public int Diameter { get; set; }
     }
 }
