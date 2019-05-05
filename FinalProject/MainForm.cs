@@ -1,5 +1,7 @@
 ﻿using FinalProject.Services.MainForm;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace FinalProject
@@ -28,6 +30,7 @@ namespace FinalProject
             _service.OnNetworkStatsUpdate += HandleNetworkStatsUpdate;
             _service.ProgressBarService.OnProgressBarStart += HandleProgressBarStart;
             _service.ProgressBarService.OnProgressBarStop += HandleProgressBarStop;
+            _service.OnNetworkCommunitiesUpdate += HandleNetworkCommunitiesUpdate;
         }
 
         #region Controller event handlers
@@ -95,6 +98,25 @@ namespace FinalProject
                 Update();
         }
 
+        private void HandleNetworkCommunitiesUpdate(NetworkWrapper network)
+        {
+            void Update()
+            {
+                listViewCommunities.Items.Clear();
+
+                var items = network.Communities
+                    .Select(e => new ListViewItem(e.Id.ToString()) {SubItems = {e.Nodes.Count.ToString()}})
+                    .ToArray();
+
+                listViewCommunities.Items.AddRange(items);
+            }
+
+            if (listViewCommunities.InvokeRequired)
+                listViewCommunities.Invoke((MethodInvoker) Update);
+            else
+            Update();
+        }
+
         #endregion
 
         #region Form event handlers
@@ -118,8 +140,24 @@ namespace FinalProject
         {
             var network = _service.GetNetwork((string)listNetworks.SelectedItem);
             HandleNetworkStatsUpdate(network);
+            HandleNetworkCommunitiesUpdate(network);
         }
 
         #endregion
+
+        private void buttonRunIterativeSearch_Click(object sender, EventArgs e)
+        {
+            _service.FindCommunities((string)listNetworks.SelectedItem);
+        }
+
+        private void buttonCreateNetworkFromCommunity_Click(object sender, EventArgs e)
+        {
+            string network = (string) listNetworks.SelectedItem;
+            if (listViewCommunities.SelectedItems.Count > 0)
+            {
+                string community = listViewCommunities.SelectedItems[0].Text;
+                _service.CreateNetworkFromCommunity(network, community);
+            }
+        }
     }
 }

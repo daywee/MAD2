@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MoreLinq;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FinalProject.NetworkAnalysis
@@ -49,6 +50,28 @@ namespace FinalProject.NetworkAnalysis
             return (float)Nodes.Sum(e => e.Degree) / Nodes.Count;
         }
 
+        public IncidenceMatrix GetIncidenceMatrix()
+        {
+            var incidenceMatrix = new int[Nodes.Count, Nodes.Count];
+
+            foreach (var n1 in Nodes)
+            {
+                foreach (var n2 in n1.Neighbors)
+                {
+                    int x = n1.Id;
+                    int y = n2.Id;
+
+                    if (incidenceMatrix[x, y] == 0)
+                    {
+                        incidenceMatrix[x, y] = 1;
+                        incidenceMatrix[y, x] = 1;
+                    }
+                }
+            }
+
+            return new IncidenceMatrix(incidenceMatrix);
+        }
+
         public Network Clone()
         {
             var newVertices = Nodes.Select(e => new Node(e)).ToDictionary(e => e.Id);
@@ -58,10 +81,15 @@ namespace FinalProject.NetworkAnalysis
                 var newVertex = newVertices[vertex.Id];
                 foreach (var neighbor in vertex.Neighbors)
                 {
-                    var newNeighbor = newVertices[neighbor.Id];
-                    newVertex.AddNeighborBiDirection(newNeighbor);
+                    if (newVertices.ContainsKey(neighbor.Id))
+                    {
+                        var newNeighbor = newVertices[neighbor.Id];
+                        newVertex.AddNeighborBiDirection(newNeighbor);
+                    }
                 }
             }
+
+            newVertices.Values.ForEach((e, i) => e.Id = i);
 
             return new Network(newVertices.Values.ToList());
         }

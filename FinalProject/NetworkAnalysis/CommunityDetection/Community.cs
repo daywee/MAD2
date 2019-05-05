@@ -5,10 +5,12 @@ namespace FinalProject.NetworkAnalysis.CommunityDetection
 {
     public class Community
     {
+        public int Id { get; set; }
         public List<Node> Nodes { get; set; }
 
-        public Community(IEnumerable<Node> nodes)
+        public Community(int id, IEnumerable<Node> nodes)
         {
+            Id = id;
             Nodes = nodes.ToList();
         }
     }

@@ -1,8 +1,8 @@
 ﻿using FinalProject.NetworkAnalysis;
+using FinalProject.NetworkAnalysis.CommunityDetection;
 using FinalProject.Services.ProgressBar;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +17,7 @@ namespace FinalProject.Services.MainForm
         public event Action<NetworkWrapper> OnNetworkAdd;
         public event Action<NetworkWrapper> OnNetworkRemove;
         public event Action<NetworkWrapper> OnNetworkStatsUpdate;
+        public event Action<NetworkWrapper> OnNetworkCommunitiesUpdate; 
 
         private readonly NetworkFileLoader _networkFileLoader = new NetworkFileLoader();
 
@@ -36,7 +37,7 @@ namespace FinalProject.Services.MainForm
             {
                 var (network, incidenceMatrix) = _networkFileLoader.LoadHeroes(path, rowsToSkip);
                 //var network = _networkFileLoader.LoadFromCsvFile(path, firstId: 0, skip: 0);
-                string fileName = Path.GetFileName(path);
+                string fileName = Path.GetFileNameWithoutExtension(path);
 
                 var wrapper = new NetworkWrapper(fileName, network, incidenceMatrix);
                 Networks.Add(wrapper);
@@ -52,6 +53,33 @@ namespace FinalProject.Services.MainForm
                 Networks.Remove(network);
                 OnNetworkRemove?.Invoke(network);
             }
+        }
+
+        public void FindCommunities(string name)
+        {
+            var network = Networks.SingleOrDefault(e => e.Name == name);
+            if (network != null)
+            {
+                RunWithProgressBar(() =>
+                {
+                    var communities = IterativeLocalExpansion.FindAllCommunities(network.Network, network.Network.Nodes.First());
+                    network.Communities = communities;
+                    OnNetworkCommunitiesUpdate?.Invoke(network);
+                });
+            }
+        }
+
+        public void CreateNetworkFromCommunity(string networkName, string communityName)
+        {
+            var network = GetNetwork(networkName);
+            var community = network.Communities.Single(e => e.Id.ToString() == communityName);
+
+            // cloning because new nodes must be used
+            var newNetwork = new Network(community.Nodes).Clone();
+
+            var newNetworkWrapper = new NetworkWrapper($"{networkName} - {communityName}", newNetwork, newNetwork.GetIncidenceMatrix());
+            Networks.Add(newNetworkWrapper);
+            OnNetworkAdd?.Invoke(newNetworkWrapper);
         }
 
         private void LoadStats(NetworkWrapper network)

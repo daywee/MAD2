@@ -38,12 +38,13 @@
             this.type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBoxCommunities = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonRunIterativeSearch = new System.Windows.Forms.Button();
             this.listViewCommunities = new System.Windows.Forms.ListView();
             this.id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.vertices = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.buttonCreateNetworkFromCommunity = new System.Windows.Forms.Button();
             this.groupBoxNetworks.SuspendLayout();
             this.groupBoxNetworkStats.SuspendLayout();
             this.groupBoxCommunities.SuspendLayout();
@@ -117,6 +118,7 @@
             this.listViewStats.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.type,
             this.value});
+            this.listViewStats.FullRowSelect = true;
             this.listViewStats.GridLines = true;
             this.listViewStats.Location = new System.Drawing.Point(6, 19);
             this.listViewStats.Name = "listViewStats";
@@ -137,7 +139,8 @@
             // 
             // groupBoxCommunities
             // 
-            this.groupBoxCommunities.Controls.Add(this.button1);
+            this.groupBoxCommunities.Controls.Add(this.buttonCreateNetworkFromCommunity);
+            this.groupBoxCommunities.Controls.Add(this.buttonRunIterativeSearch);
             this.groupBoxCommunities.Controls.Add(this.listViewCommunities);
             this.groupBoxCommunities.Location = new System.Drawing.Point(583, 12);
             this.groupBoxCommunities.Name = "groupBoxCommunities";
@@ -146,20 +149,23 @@
             this.groupBoxCommunities.TabStop = false;
             this.groupBoxCommunities.Text = "Communities";
             // 
-            // button1
+            // buttonRunIterativeSearch
             // 
-            this.button1.Location = new System.Drawing.Point(21, 31);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonRunIterativeSearch.Location = new System.Drawing.Point(6, 31);
+            this.buttonRunIterativeSearch.Name = "buttonRunIterativeSearch";
+            this.buttonRunIterativeSearch.Size = new System.Drawing.Size(114, 23);
+            this.buttonRunIterativeSearch.TabIndex = 5;
+            this.buttonRunIterativeSearch.Text = "Run iterative search";
+            this.buttonRunIterativeSearch.UseVisualStyleBackColor = true;
+            this.buttonRunIterativeSearch.Click += new System.EventHandler(this.buttonRunIterativeSearch_Click);
             // 
             // listViewCommunities
             // 
             this.listViewCommunities.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.id,
             this.vertices});
+            this.listViewCommunities.FullRowSelect = true;
+            this.listViewCommunities.GridLines = true;
             this.listViewCommunities.Location = new System.Drawing.Point(6, 60);
             this.listViewCommunities.Name = "listViewCommunities";
             this.listViewCommunities.Size = new System.Drawing.Size(286, 226);
@@ -189,6 +195,16 @@
             // 
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
+            // 
+            // buttonCreateNetworkFromCommunity
+            // 
+            this.buttonCreateNetworkFromCommunity.Location = new System.Drawing.Point(126, 31);
+            this.buttonCreateNetworkFromCommunity.Name = "buttonCreateNetworkFromCommunity";
+            this.buttonCreateNetworkFromCommunity.Size = new System.Drawing.Size(164, 23);
+            this.buttonCreateNetworkFromCommunity.TabIndex = 6;
+            this.buttonCreateNetworkFromCommunity.Text = "Create network from community";
+            this.buttonCreateNetworkFromCommunity.UseVisualStyleBackColor = true;
+            this.buttonCreateNetworkFromCommunity.Click += new System.EventHandler(this.buttonCreateNetworkFromCommunity_Click);
             // 
             // MainForm
             // 
@@ -223,13 +239,14 @@
         private System.Windows.Forms.ColumnHeader type;
         private System.Windows.Forms.ColumnHeader value;
         private System.Windows.Forms.GroupBox groupBoxCommunities;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonRunIterativeSearch;
         private System.Windows.Forms.ListView listViewCommunities;
         private System.Windows.Forms.ColumnHeader id;
         private System.Windows.Forms.ColumnHeader vertices;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         private System.Windows.Forms.CheckBox checkBoxSkipFirstLine;
+        private System.Windows.Forms.Button buttonCreateNetworkFromCommunity;
     }
 }
 

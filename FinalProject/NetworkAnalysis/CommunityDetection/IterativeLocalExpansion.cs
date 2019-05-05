@@ -27,13 +27,13 @@ namespace FinalProject.NetworkAnalysis.CommunityDetection
                 S = S.Except(coveredNodes).ToList();
             }
 
-            return communities.Select(e => new Community(e.D)).ToList();
+            return communities.Select((e, i) => new Community(i, e.D)).ToList();
         }
 
         public static Community FindLocalCommunity(Network network, Node startNode)
         {
             var community = FindLocalCommunityInternal(network, startNode);
-            return new Community(community.D);
+            return new Community(0, community.D);
         }
 
         private static IterativeLocalExpansionCommunity FindLocalCommunityInternal(Network network, Node startNode)
