@@ -207,5 +207,14 @@ namespace FinalProject
                 }
             }
         }
+
+        private void buttonGenerateNetwork_Click(object sender, EventArgs e)
+        {
+            int n = Convert.ToInt32(numericNoNodes.Value);
+            int m0 = Convert.ToInt32(numericNoFundamentalNodes.Value);
+            int m = Convert.ToInt32(numericNoCreatedEdges.Value);
+            double v = Convert.ToDouble(numericV.Value);
+            _service.GenerateBAModelWithAging(n, m0, m, v);
+        }
     }
 }

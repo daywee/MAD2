@@ -48,11 +48,26 @@
             this.buttonExportNetworkToR = new System.Windows.Forms.Button();
             this.buttonExportToCsv = new System.Windows.Forms.Button();
             this.pictureBoxNetworkPlot = new System.Windows.Forms.PictureBox();
+            this.groupBoxNetworkGenerator = new System.Windows.Forms.GroupBox();
+            this.buttonGenerateNetwork = new System.Windows.Forms.Button();
+            this.numericNoNodes = new System.Windows.Forms.NumericUpDown();
+            this.numericNoFundamentalNodes = new System.Windows.Forms.NumericUpDown();
+            this.numericNoCreatedEdges = new System.Windows.Forms.NumericUpDown();
+            this.numericV = new System.Windows.Forms.NumericUpDown();
+            this.labelNoNodes = new System.Windows.Forms.Label();
+            this.labelNoFundamentalNodes = new System.Windows.Forms.Label();
+            this.labelNoCreatedEdges = new System.Windows.Forms.Label();
+            this.labelV = new System.Windows.Forms.Label();
             this.groupBoxNetworks.SuspendLayout();
             this.groupBoxNetworkStats.SuspendLayout();
             this.groupBoxCommunities.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxNetworkPlot)).BeginInit();
+            this.groupBoxNetworkGenerator.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoNodes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoFundamentalNodes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoCreatedEdges)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericV)).BeginInit();
             this.SuspendLayout();
             // 
             // listNetworks
@@ -240,11 +255,150 @@
             this.pictureBoxNetworkPlot.TabIndex = 6;
             this.pictureBoxNetworkPlot.TabStop = false;
             // 
+            // groupBoxNetworkGenerator
+            // 
+            this.groupBoxNetworkGenerator.Controls.Add(this.labelV);
+            this.groupBoxNetworkGenerator.Controls.Add(this.labelNoCreatedEdges);
+            this.groupBoxNetworkGenerator.Controls.Add(this.labelNoFundamentalNodes);
+            this.groupBoxNetworkGenerator.Controls.Add(this.labelNoNodes);
+            this.groupBoxNetworkGenerator.Controls.Add(this.numericV);
+            this.groupBoxNetworkGenerator.Controls.Add(this.numericNoCreatedEdges);
+            this.groupBoxNetworkGenerator.Controls.Add(this.numericNoFundamentalNodes);
+            this.groupBoxNetworkGenerator.Controls.Add(this.numericNoNodes);
+            this.groupBoxNetworkGenerator.Controls.Add(this.buttonGenerateNetwork);
+            this.groupBoxNetworkGenerator.Location = new System.Drawing.Point(12, 384);
+            this.groupBoxNetworkGenerator.Name = "groupBoxNetworkGenerator";
+            this.groupBoxNetworkGenerator.Size = new System.Drawing.Size(221, 220);
+            this.groupBoxNetworkGenerator.TabIndex = 7;
+            this.groupBoxNetworkGenerator.TabStop = false;
+            this.groupBoxNetworkGenerator.Text = "Network generator";
+            // 
+            // buttonGenerateNetwork
+            // 
+            this.buttonGenerateNetwork.Location = new System.Drawing.Point(139, 190);
+            this.buttonGenerateNetwork.Name = "buttonGenerateNetwork";
+            this.buttonGenerateNetwork.Size = new System.Drawing.Size(75, 23);
+            this.buttonGenerateNetwork.TabIndex = 0;
+            this.buttonGenerateNetwork.Text = "Generate";
+            this.buttonGenerateNetwork.UseVisualStyleBackColor = true;
+            this.buttonGenerateNetwork.Click += new System.EventHandler(this.buttonGenerateNetwork_Click);
+            // 
+            // numericNoNodes
+            // 
+            this.numericNoNodes.Location = new System.Drawing.Point(144, 19);
+            this.numericNoNodes.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericNoNodes.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericNoNodes.Name = "numericNoNodes";
+            this.numericNoNodes.Size = new System.Drawing.Size(70, 20);
+            this.numericNoNodes.TabIndex = 2;
+            this.numericNoNodes.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // numericNoFundamentalNodes
+            // 
+            this.numericNoFundamentalNodes.Location = new System.Drawing.Point(145, 45);
+            this.numericNoFundamentalNodes.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericNoFundamentalNodes.Name = "numericNoFundamentalNodes";
+            this.numericNoFundamentalNodes.Size = new System.Drawing.Size(70, 20);
+            this.numericNoFundamentalNodes.TabIndex = 3;
+            this.numericNoFundamentalNodes.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // numericNoCreatedEdges
+            // 
+            this.numericNoCreatedEdges.Location = new System.Drawing.Point(144, 71);
+            this.numericNoCreatedEdges.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericNoCreatedEdges.Name = "numericNoCreatedEdges";
+            this.numericNoCreatedEdges.Size = new System.Drawing.Size(70, 20);
+            this.numericNoCreatedEdges.TabIndex = 4;
+            this.numericNoCreatedEdges.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // numericV
+            // 
+            this.numericV.DecimalPlaces = 1;
+            this.numericV.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericV.Location = new System.Drawing.Point(145, 97);
+            this.numericV.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.numericV.Name = "numericV";
+            this.numericV.Size = new System.Drawing.Size(70, 20);
+            this.numericV.TabIndex = 5;
+            // 
+            // labelNoNodes
+            // 
+            this.labelNoNodes.AutoSize = true;
+            this.labelNoNodes.Location = new System.Drawing.Point(6, 21);
+            this.labelNoNodes.Name = "labelNoNodes";
+            this.labelNoNodes.Size = new System.Drawing.Size(38, 13);
+            this.labelNoNodes.TabIndex = 6;
+            this.labelNoNodes.Text = "Nodes";
+            // 
+            // labelNoFundamentalNodes
+            // 
+            this.labelNoFundamentalNodes.AutoSize = true;
+            this.labelNoFundamentalNodes.Location = new System.Drawing.Point(6, 45);
+            this.labelNoFundamentalNodes.Name = "labelNoFundamentalNodes";
+            this.labelNoFundamentalNodes.Size = new System.Drawing.Size(100, 13);
+            this.labelNoFundamentalNodes.TabIndex = 7;
+            this.labelNoFundamentalNodes.Text = "Fundamental nodes";
+            // 
+            // labelNoCreatedEdges
+            // 
+            this.labelNoCreatedEdges.AutoSize = true;
+            this.labelNoCreatedEdges.Location = new System.Drawing.Point(6, 73);
+            this.labelNoCreatedEdges.Name = "labelNoCreatedEdges";
+            this.labelNoCreatedEdges.Size = new System.Drawing.Size(76, 13);
+            this.labelNoCreatedEdges.TabIndex = 8;
+            this.labelNoCreatedEdges.Text = "Created edges";
+            // 
+            // labelV
+            // 
+            this.labelV.AutoSize = true;
+            this.labelV.Location = new System.Drawing.Point(6, 97);
+            this.labelV.Name = "labelV";
+            this.labelV.Size = new System.Drawing.Size(14, 13);
+            this.labelV.TabIndex = 9;
+            this.labelV.Text = "V";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1352, 687);
+            this.Controls.Add(this.groupBoxNetworkGenerator);
             this.Controls.Add(this.pictureBoxNetworkPlot);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBoxCommunities);
@@ -259,6 +413,12 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxNetworkPlot)).EndInit();
+            this.groupBoxNetworkGenerator.ResumeLayout(false);
+            this.groupBoxNetworkGenerator.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoNodes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoFundamentalNodes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoCreatedEdges)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -286,6 +446,16 @@
         private System.Windows.Forms.Button buttonExportNetworkToR;
         private System.Windows.Forms.Button buttonExportToCsv;
         private System.Windows.Forms.PictureBox pictureBoxNetworkPlot;
+        private System.Windows.Forms.GroupBox groupBoxNetworkGenerator;
+        private System.Windows.Forms.Button buttonGenerateNetwork;
+        private System.Windows.Forms.NumericUpDown numericV;
+        private System.Windows.Forms.NumericUpDown numericNoCreatedEdges;
+        private System.Windows.Forms.NumericUpDown numericNoFundamentalNodes;
+        private System.Windows.Forms.NumericUpDown numericNoNodes;
+        private System.Windows.Forms.Label labelV;
+        private System.Windows.Forms.Label labelNoCreatedEdges;
+        private System.Windows.Forms.Label labelNoFundamentalNodes;
+        private System.Windows.Forms.Label labelNoNodes;
     }
 }
 

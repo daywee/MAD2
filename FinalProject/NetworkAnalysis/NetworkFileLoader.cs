@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Csv;
+using FinalProject.NetworkAnalysis.CommunityDetection;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Csv;
-using FinalProject.NetworkAnalysis.CommunityDetection;
 
 namespace FinalProject.NetworkAnalysis
 {
@@ -25,7 +24,7 @@ namespace FinalProject.NetworkAnalysis
                     string name = line.Values[i];
                     if (!nameNodeDict.ContainsKey(name))
                     {
-                        nameNodeDict.Add(name, new Node(id++) { Name = name });
+                        nameNodeDict.Add(name, new Node(id++, name));
                     }
                 }
             }
@@ -49,47 +48,6 @@ namespace FinalProject.NetworkAnalysis
             }
 
             return (new Network(nameNodeDict.Values.ToList()), new IncidenceMatrix(incidenceMatrix));
-        }
-
-        public Network LoadFromCsvFile(string path, int firstId = 1, int rowsToSkip = 0)
-        {
-            string csv = File.ReadAllText(path);
-
-            var data = csv.Split('\n')
-                .Skip(rowsToSkip)
-                .Select(line => line.Split(new[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries))
-                .Where(e => e.Length > 0)
-                .Select(e => new[] { int.Parse(e[0]), int.Parse(e[1]) })
-                .ToList();
-
-            var allIds = data.SelectMany(e => e, (ints, i) => i).ToList();
-            int minId = allIds.Min();
-            int maxId = allIds.Max();
-
-            var vertices = Enumerable.Range(minId, maxId + 1)
-                .Select(e => new Node(e))
-                .ToDictionary(e => e.Id);
-
-            foreach (var row in data)
-            {
-                var a = vertices[row[0]];
-                var b = vertices[row[1]];
-
-                a.Neighbors.Add(b);
-                b.Neighbors.Add(a);
-            }
-
-            if (minId != firstId)
-            {
-                int difference = minId - firstId;
-                var verticesList = vertices.Values.ToList();
-                foreach (var vertex in verticesList)
-                {
-                    vertex.Id -= difference;
-                }
-            }
-
-            return new Network(vertices.Values.ToList());
         }
 
         public void ExportToREdgelist(string path, Network network)

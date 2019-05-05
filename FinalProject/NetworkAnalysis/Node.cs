@@ -11,7 +11,7 @@ namespace FinalProject.NetworkAnalysis
         public List<Node> Neighbors { get; set; } = new List<Node>();
         public int Degree => Neighbors.Count;
 
-        public Node(int id)
+        public Node(int id, string name)
         {
             Id = id;
         }

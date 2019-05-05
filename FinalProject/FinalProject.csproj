@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="NetworkAnalysis\Matrix.cs" />
     <Compile Include="NetworkAnalysis\NetworkFileExporter.cs" />
+    <Compile Include="NetworkAnalysis\NetworkGenerator.cs" />
     <Compile Include="NetworkAnalysis\Vector.cs" />
     <Compile Include="Services\MainForm\MainFormService.cs" />
     <Compile Include="NetworkAnalysis\CommunityDetection\Community.cs" />

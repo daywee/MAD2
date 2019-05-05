@@ -1,13 +1,13 @@
 ﻿using FinalProject.NetworkAnalysis;
 using FinalProject.NetworkAnalysis.CommunityDetection;
 using FinalProject.Services.ProgressBar;
+using FinalProject.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using FinalProject.Utils;
 
 namespace FinalProject.Services.MainForm
 {
@@ -20,9 +20,10 @@ namespace FinalProject.Services.MainForm
         public event Action<NetworkWrapper> OnNetworkRemove;
         public event Action<NetworkWrapper> OnNetworkStatsUpdate;
         public event Action<NetworkWrapper> OnNetworkCommunitiesUpdate;
-        public event Action<NetworkWrapper> OnNetworkPlotUpdate; 
+        public event Action<NetworkWrapper> OnNetworkPlotUpdate;
 
         private readonly NetworkFileLoader _networkFileLoader = new NetworkFileLoader();
+        private readonly NetworkGenerator _networkGenerator = new NetworkGenerator();
 
         public MainFormService()
         {
@@ -40,10 +41,21 @@ namespace FinalProject.Services.MainForm
             RunWithProgressBar(() =>
             {
                 var (network, incidenceMatrix) = _networkFileLoader.LoadHeroes(path, rowsToSkip);
-                //var network = _networkFileLoader.LoadFromCsvFile(path, firstId: 0, skip: 0);
                 string fileName = Path.GetFileNameWithoutExtension(path);
 
                 var wrapper = new NetworkWrapper(fileName, network, incidenceMatrix);
+                Networks.Add(wrapper);
+                OnNetworkAdd?.Invoke(wrapper);
+            });
+        }
+
+        private int BACounter = 0;
+        public void GenerateBAModelWithAging(int n, int m0, int m, double v)
+        {
+            RunWithProgressBar(() =>
+            {
+                var network = _networkGenerator.GenerateBarabasiAlbertModelWithAging(n, m0, m, v);
+                var wrapper = new NetworkWrapper($"BA_{BACounter++}", network, network.GetIncidenceMatrix());
                 Networks.Add(wrapper);
                 OnNetworkAdd?.Invoke(wrapper);
             });
@@ -82,7 +94,7 @@ namespace FinalProject.Services.MainForm
             {
                 bitmap = new Bitmap(fs);
             }
-            
+
             TempFileHelper.DeleteTmpFile(tempFileName);
             network.Plot = bitmap;
             OnNetworkPlotUpdate?.Invoke(network);
