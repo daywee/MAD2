@@ -14,6 +14,7 @@ namespace FinalProject.NetworkAnalysis
         public Node(int id, string name)
         {
             Id = id;
+            Name = name;
         }
 
         public Node(Node node)
