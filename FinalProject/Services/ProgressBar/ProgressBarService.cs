@@ -15,8 +15,9 @@ namespace FinalProject.Services.ProgressBar
         {
             lock (_tasksLock)
             {
+                if (_tasks.Count == 0)
+                    OnProgressBarStart?.Invoke();
                 _tasks.Add(id);
-                OnProgressBarStart?.Invoke();
             }
         }
 

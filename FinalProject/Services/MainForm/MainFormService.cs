@@ -2,6 +2,7 @@
 using FinalProject.Services.ProgressBar;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,11 +34,11 @@ namespace FinalProject.Services.MainForm
         {
             RunWithProgressBar(() =>
             {
-                var network = _networkFileLoader.LoadHeroes(path, rowsToSkip);
+                var (network, incidenceMatrix) = _networkFileLoader.LoadHeroes(path, rowsToSkip);
                 //var network = _networkFileLoader.LoadFromCsvFile(path, firstId: 0, skip: 0);
                 string fileName = Path.GetFileName(path);
 
-                var wrapper = new NetworkWrapper(fileName, network);
+                var wrapper = new NetworkWrapper(fileName, network, incidenceMatrix);
                 Networks.Add(wrapper);
                 OnNetworkAdd?.Invoke(wrapper);
             });
@@ -59,6 +60,15 @@ namespace FinalProject.Services.MainForm
             {
                 network.Network.ComputeClusteringCoefficient();
                 network.Stats.ClusteringCoefficient = network.Network.GetGlobalClusteringCoefficient();
+
+                OnNetworkStatsUpdate?.Invoke(network);
+            });
+
+            RunWithProgressBar(() =>
+            {
+                network.DistanceMatrix = network.IncidenceMatrix.GetDistanceMatrix();
+                network.Stats.MeanDistance = network.DistanceMatrix.GetMeanDistance();
+                network.Stats.ClosenessCentrality = network.DistanceMatrix.GetClosenessCentralityVector().Average;
 
                 OnNetworkStatsUpdate?.Invoke(network);
             });

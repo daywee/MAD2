@@ -7,7 +7,7 @@ namespace FinalProject
     public partial class MainForm : Form
     {
         private readonly MainFormService _service;
-        private const string DoubleFormat = "0.00";
+        private const string DoubleFormat = "0.000";
 
         public MainForm()
         {

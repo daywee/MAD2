@@ -61,6 +61,8 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="NetworkAnalysis\Matrix.cs" />
+    <Compile Include="NetworkAnalysis\Vector.cs" />
     <Compile Include="Services\MainForm\MainFormService.cs" />
     <Compile Include="NetworkAnalysis\CommunityDetection\Community.cs" />
     <Compile Include="NetworkAnalysis\CommunityDetection\IterativeLocalExpansionCommunity.cs" />

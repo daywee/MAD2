@@ -10,7 +10,7 @@ namespace FinalProject.NetworkAnalysis
 {
     public class NetworkFileLoader
     {
-        public Network LoadHeroes(string path, int rowsToSkip = 0)
+        public (Network network, IncidenceMatrix incidenceMatrix) LoadHeroes(string path, int rowsToSkip = 0)
         {
             string csv = File.ReadAllText(path);
 
@@ -30,15 +30,25 @@ namespace FinalProject.NetworkAnalysis
                 }
             }
 
+            var incidenceMatrix = new int[id, id];
             foreach (var line in lines)
             {
+                // construct network
                 var n1 = nameNodeDict[line.Values[0]];
                 var n2 = nameNodeDict[line.Values[1]];
-
                 n1.AddNeighborBiDirection(n2);
+
+                // construct incidence matrix
+                int x = n1.Id;
+                int y = n2.Id;
+                if (incidenceMatrix[x, y] == 0)
+                {
+                    incidenceMatrix[x, y] = 1;
+                    incidenceMatrix[y, x] = 1;
+                }
             }
 
-            return new Network(nameNodeDict.Values.ToList());
+            return (new Network(nameNodeDict.Values.ToList()), new IncidenceMatrix(incidenceMatrix));
         }
 
         public Network LoadFromCsvFile(string path, int firstId = 1, int rowsToSkip = 0)
