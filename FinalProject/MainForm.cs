@@ -30,6 +30,7 @@ namespace FinalProject
             _service.ProgressBarService.OnProgressBarStart += HandleProgressBarStart;
             _service.ProgressBarService.OnProgressBarStop += HandleProgressBarStop;
             _service.OnNetworkCommunitiesUpdate += HandleNetworkCommunitiesUpdate;
+            _service.OnNetworkPlotUpdate += HandleNetworkPlotUpdate;
         }
 
         #region Controller event handlers
@@ -116,6 +117,24 @@ namespace FinalProject
                 Update();
         }
 
+        private void HandleNetworkPlotUpdate(NetworkWrapper network)
+        {
+            if (network.Plot == null)
+                return;
+
+            if (pictureBoxNetworkPlot.InvokeRequired)
+            {
+                pictureBoxNetworkPlot.Invoke((MethodInvoker)delegate
+                {
+                    pictureBoxNetworkPlot.Image = network.Plot;
+                });
+            }
+            else
+            {
+                pictureBoxNetworkPlot.Image = network.Plot;
+            }
+        }
+
         #endregion
 
         #region Form event handlers
@@ -140,6 +159,7 @@ namespace FinalProject
             var network = _service.GetNetwork((string)listNetworks.SelectedItem);
             HandleNetworkStatsUpdate(network);
             HandleNetworkCommunitiesUpdate(network);
+            HandleNetworkPlotUpdate(network);
         }
 
         #endregion

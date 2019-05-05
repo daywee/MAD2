@@ -47,10 +47,12 @@
             this.buttonCreateNetworkFromCommunity = new System.Windows.Forms.Button();
             this.buttonExportNetworkToR = new System.Windows.Forms.Button();
             this.buttonExportToCsv = new System.Windows.Forms.Button();
+            this.pictureBoxNetworkPlot = new System.Windows.Forms.PictureBox();
             this.groupBoxNetworks.SuspendLayout();
             this.groupBoxNetworkStats.SuspendLayout();
             this.groupBoxCommunities.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxNetworkPlot)).BeginInit();
             this.SuspendLayout();
             // 
             // listNetworks
@@ -146,9 +148,9 @@
             this.groupBoxCommunities.Controls.Add(this.buttonCreateNetworkFromCommunity);
             this.groupBoxCommunities.Controls.Add(this.buttonRunIterativeSearch);
             this.groupBoxCommunities.Controls.Add(this.listViewCommunities);
-            this.groupBoxCommunities.Location = new System.Drawing.Point(583, 12);
+            this.groupBoxCommunities.Location = new System.Drawing.Point(239, 311);
             this.groupBoxCommunities.Name = "groupBoxCommunities";
-            this.groupBoxCommunities.Size = new System.Drawing.Size(298, 293);
+            this.groupBoxCommunities.Size = new System.Drawing.Size(338, 293);
             this.groupBoxCommunities.TabIndex = 4;
             this.groupBoxCommunities.TabStop = false;
             this.groupBoxCommunities.Text = "Communities";
@@ -230,11 +232,20 @@
             this.buttonExportToCsv.UseVisualStyleBackColor = true;
             this.buttonExportToCsv.Click += new System.EventHandler(this.buttonExportToCsv_Click);
             // 
+            // pictureBoxNetworkPlot
+            // 
+            this.pictureBoxNetworkPlot.Location = new System.Drawing.Point(583, 16);
+            this.pictureBoxNetworkPlot.Name = "pictureBoxNetworkPlot";
+            this.pictureBoxNetworkPlot.Size = new System.Drawing.Size(746, 588);
+            this.pictureBoxNetworkPlot.TabIndex = 6;
+            this.pictureBoxNetworkPlot.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1352, 687);
+            this.Controls.Add(this.pictureBoxNetworkPlot);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBoxCommunities);
             this.Controls.Add(this.groupBoxNetworkStats);
@@ -247,6 +258,7 @@
             this.groupBoxCommunities.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxNetworkPlot)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,6 +285,7 @@
         private System.Windows.Forms.Button buttonCreateNetworkFromCommunity;
         private System.Windows.Forms.Button buttonExportNetworkToR;
         private System.Windows.Forms.Button buttonExportToCsv;
+        private System.Windows.Forms.PictureBox pictureBoxNetworkPlot;
     }
 }
 

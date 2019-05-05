@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using FinalProject.NetworkAnalysis;
 using FinalProject.NetworkAnalysis.CommunityDetection;
 
@@ -12,6 +13,7 @@ namespace FinalProject.Services.MainForm
         public DistanceMatrix DistanceMatrix { get; set; }
         public NetworkStats Stats { get; set; } = new NetworkStats();
         public List<Community> Communities { get; set; } = new List<Community>();
+        public Bitmap Plot { get; set; }
 
         public NetworkWrapper(string name, Network network, IncidenceMatrix incidenceMatrix)
         {

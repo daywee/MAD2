@@ -3,9 +3,11 @@ using FinalProject.NetworkAnalysis.CommunityDetection;
 using FinalProject.Services.ProgressBar;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using FinalProject.Utils;
 
 namespace FinalProject.Services.MainForm
 {
@@ -17,13 +19,15 @@ namespace FinalProject.Services.MainForm
         public event Action<NetworkWrapper> OnNetworkAdd;
         public event Action<NetworkWrapper> OnNetworkRemove;
         public event Action<NetworkWrapper> OnNetworkStatsUpdate;
-        public event Action<NetworkWrapper> OnNetworkCommunitiesUpdate; 
+        public event Action<NetworkWrapper> OnNetworkCommunitiesUpdate;
+        public event Action<NetworkWrapper> OnNetworkPlotUpdate; 
 
         private readonly NetworkFileLoader _networkFileLoader = new NetworkFileLoader();
 
         public MainFormService()
         {
-            OnNetworkAdd += LoadStats;
+            OnNetworkAdd += InitNetwork;
+            OnNetworkCommunitiesUpdate += GetNetworkPlot;
         }
 
         public NetworkWrapper GetNetwork(string name)
@@ -67,6 +71,23 @@ namespace FinalProject.Services.MainForm
             }
         }
 
+        private void GetNetworkPlot(NetworkWrapper network)
+        {
+            string tempFileName = TempFileHelper.CreateTmpFile();
+            string script = RScriptCreator.CreatePlotNetworkScript(tempFileName, network.Network, network.Communities);
+            REngineRunner.RunFromCmd(script);
+
+            Bitmap bitmap;
+            using (var fs = File.Open(tempFileName, FileMode.Open))
+            {
+                bitmap = new Bitmap(fs);
+            }
+            
+            TempFileHelper.DeleteTmpFile(tempFileName);
+            network.Plot = bitmap;
+            OnNetworkPlotUpdate?.Invoke(network);
+        }
+
         public void FindCommunities(string name)
         {
             var network = Networks.SingleOrDefault(e => e.Name == name);
@@ -94,7 +115,7 @@ namespace FinalProject.Services.MainForm
             OnNetworkAdd?.Invoke(newNetworkWrapper);
         }
 
-        private void LoadStats(NetworkWrapper network)
+        private void InitNetwork(NetworkWrapper network)
         {
             RunWithProgressBar(() =>
             {
@@ -121,6 +142,8 @@ namespace FinalProject.Services.MainForm
 
                 OnNetworkStatsUpdate?.Invoke(network);
             });
+
+            GetNetworkPlot(network);
         }
 
         private void RunWithProgressBar(Action action)
