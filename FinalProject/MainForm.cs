@@ -159,5 +159,17 @@ namespace FinalProject
                 _service.CreateNetworkFromCommunity(network, community);
             }
         }
+
+        private void buttonExportNetworkToR_Click(object sender, EventArgs e)
+        {
+            if (listNetworks.SelectedItem != null)
+            {
+                var dialog = new SaveFileDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    _service.ExportNetworkToR(dialog.FileName, (string)listNetworks.SelectedItem);
+                }
+            }
+        }
     }
 }

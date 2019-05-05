@@ -45,6 +45,12 @@ namespace FinalProject.Services.MainForm
             });
         }
 
+        public void ExportNetworkToR(string path, string networkName)
+        {
+            var network = GetNetwork(networkName);
+            NetworkFileExporter.ExportToRScript(path, network.Network, network.Communities);
+        }
+
         public void RemoveNetwork(string name)
         {
             var network = Networks.SingleOrDefault(e => e.Name == name);

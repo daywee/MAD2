@@ -45,6 +45,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.buttonCreateNetworkFromCommunity = new System.Windows.Forms.Button();
+            this.buttonExportNetworkToR = new System.Windows.Forms.Button();
             this.groupBoxNetworks.SuspendLayout();
             this.groupBoxNetworkStats.SuspendLayout();
             this.groupBoxCommunities.SuspendLayout();
@@ -72,13 +73,14 @@
             // 
             // groupBoxNetworks
             // 
+            this.groupBoxNetworks.Controls.Add(this.buttonExportNetworkToR);
             this.groupBoxNetworks.Controls.Add(this.checkBoxSkipFirstLine);
             this.groupBoxNetworks.Controls.Add(this.buttonDeleteNetwork);
             this.groupBoxNetworks.Controls.Add(this.listNetworks);
             this.groupBoxNetworks.Controls.Add(this.buttonLoadNetwork);
             this.groupBoxNetworks.Location = new System.Drawing.Point(12, 12);
             this.groupBoxNetworks.Name = "groupBoxNetworks";
-            this.groupBoxNetworks.Size = new System.Drawing.Size(221, 322);
+            this.groupBoxNetworks.Size = new System.Drawing.Size(221, 366);
             this.groupBoxNetworks.TabIndex = 2;
             this.groupBoxNetworks.TabStop = false;
             this.groupBoxNetworks.Text = "Networks";
@@ -206,6 +208,16 @@
             this.buttonCreateNetworkFromCommunity.UseVisualStyleBackColor = true;
             this.buttonCreateNetworkFromCommunity.Click += new System.EventHandler(this.buttonCreateNetworkFromCommunity_Click);
             // 
+            // buttonExportNetworkToR
+            // 
+            this.buttonExportNetworkToR.Location = new System.Drawing.Point(0, 322);
+            this.buttonExportNetworkToR.Name = "buttonExportNetworkToR";
+            this.buttonExportNetworkToR.Size = new System.Drawing.Size(101, 23);
+            this.buttonExportNetworkToR.TabIndex = 6;
+            this.buttonExportNetworkToR.Text = "Export to R";
+            this.buttonExportNetworkToR.UseVisualStyleBackColor = true;
+            this.buttonExportNetworkToR.Click += new System.EventHandler(this.buttonExportNetworkToR_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -247,6 +259,7 @@
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         private System.Windows.Forms.CheckBox checkBoxSkipFirstLine;
         private System.Windows.Forms.Button buttonCreateNetworkFromCommunity;
+        private System.Windows.Forms.Button buttonExportNetworkToR;
     }
 }
 
