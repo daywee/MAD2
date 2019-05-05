@@ -1,17 +1,18 @@
-﻿using System;
+﻿using FinalProject.Services.MainForm;
+using System;
 using System.Windows.Forms;
 
 namespace FinalProject
 {
     public partial class MainForm : Form
     {
-        private readonly MainFormController _controller;
+        private readonly MainFormService _service;
         private const string DoubleFormat = "0.00";
 
         public MainForm()
         {
             InitializeComponent();
-            _controller = new MainFormController();
+            _service = new MainFormService();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -22,11 +23,11 @@ namespace FinalProject
             toolStripProgressBar.ProgressBar.MarqueeAnimationSpeed = 20;
             toolStripProgressBar.ProgressBar.Visible = false;
 
-            _controller.OnNetworkAdd += HandleNetworkAdd;
-            _controller.OnNetworkRemove += HandleNetworkRemove;
-            _controller.OnNetworkStatsUpdate += HandleNetworkStatsUpdate;
-            _controller.ProgressBarService.OnProgressBarStart += HandleProgressBarStart;
-            _controller.ProgressBarService.OnProgressBarStop += HandleProgressBarStop;
+            _service.OnNetworkAdd += HandleNetworkAdd;
+            _service.OnNetworkRemove += HandleNetworkRemove;
+            _service.OnNetworkStatsUpdate += HandleNetworkStatsUpdate;
+            _service.ProgressBarService.OnProgressBarStart += HandleProgressBarStart;
+            _service.ProgressBarService.OnProgressBarStop += HandleProgressBarStop;
         }
 
         #region Controller event handlers
@@ -97,13 +98,13 @@ namespace FinalProject
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 bool skip = checkBoxSkipFirstLine.Checked;
-                _controller.LoadNetwork(dialog.FileName, skip ? 1 : 0);
+                _service.LoadNetwork(dialog.FileName, skip ? 1 : 0);
             }
         }
 
         private void buttonDeleteNetwork_Click(object sender, EventArgs e)
         {
-            _controller.RemoveNetwork((string)listNetworks.SelectedItem);
+            _service.RemoveNetwork((string)listNetworks.SelectedItem);
         }
 
         #endregion

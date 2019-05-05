@@ -1,13 +1,14 @@
 ﻿using FinalProject.NetworkAnalysis;
+using FinalProject.Services.ProgressBar;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FinalProject
+namespace FinalProject.Services.MainForm
 {
-    public class MainFormController
+    public class MainFormService
     {
         public List<NetworkWrapper> Networks { get; set; } = new List<NetworkWrapper>();
         public ProgressBarService ProgressBarService { get; set; } = new ProgressBarService();
@@ -18,7 +19,7 @@ namespace FinalProject
 
         private readonly NetworkFileLoader _networkFileLoader = new NetworkFileLoader();
 
-        public MainFormController()
+        public MainFormService()
         {
             OnNetworkAdd += LoadStats;
         }
@@ -69,57 +70,6 @@ namespace FinalProject
                 action?.Invoke();
                 ProgressBarService.Stop(id);
             });
-        }
-    }
-
-    public class NetworkWrapper
-    {
-        public string Name { get; set; }
-        public Network Network { get; set; }
-        public NetworkStats Stats { get; set; } = new NetworkStats();
-
-        public NetworkWrapper(string name, Network network)
-        {
-            Name = name;
-            Network = network;
-        }
-    }
-
-    public class NetworkStats
-    {
-        public int Nodes { get; set; }
-        public int Edges { get; set; }
-        public double DegreeCentrality { get; set; }
-        public double ClosenessCentrality { get; set; }
-        public double MeanDistance { get; set; }
-        public double ClusteringCoefficient { get; set; }
-    }
-
-    public class ProgressBarService
-    {
-        public event Action OnProgressBarStart;
-        public event Action OnProgressBarStop;
-
-        private readonly object _tasksLock = new object();
-        private readonly List<Guid> _tasks = new List<Guid>();
-
-        public void Start(Guid id)
-        {
-            lock (_tasksLock)
-            {
-                _tasks.Add(id);
-                OnProgressBarStart?.Invoke();
-            }
-        }
-
-        public void Stop(Guid id)
-        {
-            lock (_tasksLock)
-            {
-                _tasks.Remove(id);
-                if (_tasks.Count == 0)
-                    OnProgressBarStop?.Invoke();
-            }
         }
     }
 }
