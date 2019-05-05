@@ -11,6 +11,9 @@ namespace FinalProject.NetworkAnalysis.CommunityDetection
         public List<Node> C { get; set; } = new List<Node>(); // core
         public List<Node> S { get; set; } = new List<Node>(); // shell
 
+        public int BIn { get; set; }
+        public int BOut { get; set; }
+
         public IterativeLocalExpansionCommunity(Node startNode)
         {
             AddNodeToD(startNode);
@@ -22,6 +25,9 @@ namespace FinalProject.NetworkAnalysis.CommunityDetection
             B = community.B.ToList();
             C = community.C.ToList();
             S = community.S.ToList();
+
+            BIn = community.BIn;
+            BOut = community.BOut;
         }
 
         public void AddNodeToD(Node node)
@@ -34,14 +40,26 @@ namespace FinalProject.NetworkAnalysis.CommunityDetection
             S.AddRange(node.Neighbors.Except(S).Except(D));
             B.Add(node);
 
-            foreach (var b in B.ToList())
+            BIn += D.Intersect(node.Neighbors).Count();
+            BIn += B.Intersect(node.Neighbors).Count();
+            BOut += node.Neighbors.Except(node.Neighbors.Intersect(D)).Count();
+            BOut -= node.Neighbors.Intersect(D).Count();
+
+            // only nodes in B can be affected
+            var nodesInB = node.Neighbors.Intersect(B).ToList();
+
+            int noEdgesRemoved = 0;
+            foreach (var b in nodesInB)
             {
                 if (!b.Neighbors.Intersect(S).Any())
                 {
                     B.Remove(b);
                     C.Add(b);
+                    noEdgesRemoved += b.Neighbors.Intersect(D).Count();
                 }
             }
+
+            BIn -= noEdgesRemoved;
         }
 
         public double ComputeRWithAddedNode(Node node)
@@ -53,10 +71,12 @@ namespace FinalProject.NetworkAnalysis.CommunityDetection
 
         public double ComputeR()
         {
-            int bInEdge = B.Select(e => e.Neighbors.Intersect(D).Count()).Sum();
-            int bOutEdge = B.Select(e => e.Neighbors.Intersect(S).Count()).Sum();
+            //int bInEdge = B.Select(e => e.Neighbors.Intersect(D).Count()).Sum();
+            //int bOutEdge = B.Select(e => e.Neighbors.Intersect(S).Count()).Sum();
 
-            double R = (double)bInEdge / (bOutEdge + bInEdge);
+            //double R = (double)bInEdge / (bOutEdge + bInEdge);
+
+            double R = (double)BIn / (BOut + BIn);
 
             return R;
         }
