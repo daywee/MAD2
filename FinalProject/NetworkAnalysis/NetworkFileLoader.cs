@@ -1,5 +1,5 @@
 ﻿using Csv;
-using FinalProject.NetworkAnalysis.CommunityDetection;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,9 +11,25 @@ namespace FinalProject.NetworkAnalysis
     {
         public (Network network, IncidenceMatrix incidenceMatrix) LoadNetwork(string path, int rowsToSkip = 0)
         {
-            string csv = File.ReadAllText(path);
+            string data = File.ReadAllText(path);
 
-            var lines = CsvReader.ReadFromText(csv, new CsvOptions { RowsToSkip = rowsToSkip }).ToList();
+            List<string[]> lines;
+            if (Path.GetExtension(path) == ".csv")
+            {
+                lines = CsvReader.ReadFromText(data, new CsvOptions { RowsToSkip = rowsToSkip })
+                    .Select(e => new[] { e.Values[0], e.Values[1] })
+                    .ToList();
+            }
+            else
+            {
+                // split on whitespace
+                lines = data.Split('\n')
+                    .Skip(rowsToSkip)
+                    .Select(line => line.Split(new char[0] , StringSplitOptions.RemoveEmptyEntries))
+                    .Where(e => e.Length > 0)
+                    .ToList();
+            }
+            
             var nameNodeDict = new Dictionary<string, Node>();
 
             int id = 0;
@@ -21,7 +37,7 @@ namespace FinalProject.NetworkAnalysis
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    string name = line.Values[i];
+                    string name = line[i];
                     if (!nameNodeDict.ContainsKey(name))
                     {
                         nameNodeDict.Add(name, new Node(id++, name));
@@ -33,8 +49,8 @@ namespace FinalProject.NetworkAnalysis
             foreach (var line in lines)
             {
                 // construct network
-                var n1 = nameNodeDict[line.Values[0]];
-                var n2 = nameNodeDict[line.Values[1]];
+                var n1 = nameNodeDict[line[0]];
+                var n2 = nameNodeDict[line[1]];
                 n1.AddNeighborBiDirection(n2);
 
                 // construct incidence matrix
@@ -63,36 +79,6 @@ namespace FinalProject.NetworkAnalysis
                     sb.AppendLine($"{n1.Id - 1} {n2.Id - 1}");
                 }
             }
-
-            File.WriteAllText(path, sb.ToString());
-        }
-
-        public void ExportToRScript(string path, Network network, IEnumerable<Community> communities)
-        {
-            var sb = new StringBuilder();
-            var leftSideNodes = new List<int>();
-            var rightSideNodes = new List<int>();
-            var groups = communities.Select(e => string.Join(",", e.Nodes.Select(d => d.Id)));
-
-            var usedNodes = new List<Node>();
-            foreach (var n1 in network.Nodes)
-            {
-                usedNodes.Add(n1);
-                foreach (var n2 in n1.Neighbors.Except(usedNodes))
-                {
-                    leftSideNodes.Add(n1.Id);
-                    rightSideNodes.Add(n2.Id);
-                }
-            }
-
-            var groupsAsCode = groups.Select(e => $"c({e})");
-
-            sb.AppendLine("library(igraph)");
-            sb.AppendLine($"e = cbind(c({string.Join(",", leftSideNodes)}),c({string.Join(",", rightSideNodes)}))");
-            sb.AppendLine("network = graph_from_edgelist(e, directed=F)");
-            sb.AppendLine($"groups = list({string.Join(",", groupsAsCode)})");
-            sb.AppendLine();
-            sb.AppendLine("plot(network, mark.groups=groups)");
 
             File.WriteAllText(path, sb.ToString());
         }
