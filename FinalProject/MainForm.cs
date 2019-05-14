@@ -186,19 +186,6 @@ namespace FinalProject
             }
         }
 
-        private void buttonExportNetworkToR_Click(object sender, EventArgs e)
-        {
-            if (listNetworks.SelectedItem != null)
-            {
-                var dialog = new SaveFileDialog { Filter = "R Script|*.R", DefaultExt = "R", AddExtension = true };
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    _service.ExportNetworkToR(dialog.FileName, (string)listNetworks.SelectedItem);
-                }
-            }
-        }
-
         private void buttonExportToCsv_Click(object sender, EventArgs e)
         {
             if (listNetworks.SelectedItem != null)
@@ -219,6 +206,19 @@ namespace FinalProject
             int m = Convert.ToInt32(numericNoCreatedEdges.Value);
             double v = Convert.ToDouble(numericV.Value);
             _service.GenerateBAModelWithAging(n, m0, m, v);
+        }
+
+        private void buttonExportLabels_Click(object sender, EventArgs e)
+        {
+            if (listNetworks.SelectedItem != null)
+            {
+                var dialog = new SaveFileDialog { Filter = "CSV|*.csv", DefaultExt = "csv", AddExtension = true };
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    _service.ExportNetworkVertexLabels(dialog.FileName, (string)listNetworks.SelectedItem);
+                }
+            }
         }
     }
 }

@@ -61,10 +61,10 @@ namespace FinalProject.Services.MainForm
             });
         }
 
-        public void ExportNetworkToR(string path, string networkName)
+        public void ExportNetworkVertexLabels(string path, string networkName)
         {
             var network = GetNetwork(networkName);
-            NetworkFileExporter.ExportToRScript(path, network.Network, network.Communities);
+            NetworkFileExporter.ExportNetworkVertexLabelsToCsv(path, network.Network);
         }
 
         public void ExportNetworkToCsv(string path, string networkName)
@@ -160,7 +160,10 @@ namespace FinalProject.Services.MainForm
                 OnNetworkStatsUpdate?.Invoke(network);
             });
 
-            GetNetworkPlot(network);
+            RunWithProgressBar(() =>
+            {
+                GetNetworkPlot(network);
+            });
         }
 
         private void RunWithProgressBar(Action action)

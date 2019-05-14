@@ -55,5 +55,16 @@ namespace FinalProject.NetworkAnalysis
 
             File.WriteAllText(path, sb.ToString());
         }
+
+        public static void ExportNetworkVertexLabelsToCsv(string path, Network network)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Id,Label");
+
+            foreach (var node in network.Nodes)
+                sb.AppendLine($"{node.Id},\"{node.Name}\"");
+
+            File.WriteAllText(path, sb.ToString());
+        }
     }
 }

@@ -31,6 +31,7 @@
             this.listNetworks = new System.Windows.Forms.ListBox();
             this.buttonLoadNetwork = new System.Windows.Forms.Button();
             this.groupBoxNetworks = new System.Windows.Forms.GroupBox();
+            this.buttonExportToCsv = new System.Windows.Forms.Button();
             this.checkBoxSkipFirstLine = new System.Windows.Forms.CheckBox();
             this.buttonDeleteNetwork = new System.Windows.Forms.Button();
             this.groupBoxNetworkStats = new System.Windows.Forms.GroupBox();
@@ -38,36 +39,35 @@
             this.type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBoxCommunities = new System.Windows.Forms.GroupBox();
+            this.buttonCreateNetworkFromCommunity = new System.Windows.Forms.Button();
             this.buttonRunIterativeSearch = new System.Windows.Forms.Button();
             this.listViewCommunities = new System.Windows.Forms.ListView();
             this.id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.vertices = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.buttonCreateNetworkFromCommunity = new System.Windows.Forms.Button();
-            this.buttonExportNetworkToR = new System.Windows.Forms.Button();
-            this.buttonExportToCsv = new System.Windows.Forms.Button();
             this.pictureBoxNetworkPlot = new System.Windows.Forms.PictureBox();
             this.groupBoxNetworkGenerator = new System.Windows.Forms.GroupBox();
-            this.buttonGenerateNetwork = new System.Windows.Forms.Button();
-            this.numericNoNodes = new System.Windows.Forms.NumericUpDown();
-            this.numericNoFundamentalNodes = new System.Windows.Forms.NumericUpDown();
-            this.numericNoCreatedEdges = new System.Windows.Forms.NumericUpDown();
-            this.numericV = new System.Windows.Forms.NumericUpDown();
-            this.labelNoNodes = new System.Windows.Forms.Label();
-            this.labelNoFundamentalNodes = new System.Windows.Forms.Label();
-            this.labelNoCreatedEdges = new System.Windows.Forms.Label();
             this.labelV = new System.Windows.Forms.Label();
+            this.labelNoCreatedEdges = new System.Windows.Forms.Label();
+            this.labelNoFundamentalNodes = new System.Windows.Forms.Label();
+            this.labelNoNodes = new System.Windows.Forms.Label();
+            this.numericV = new System.Windows.Forms.NumericUpDown();
+            this.numericNoCreatedEdges = new System.Windows.Forms.NumericUpDown();
+            this.numericNoFundamentalNodes = new System.Windows.Forms.NumericUpDown();
+            this.numericNoNodes = new System.Windows.Forms.NumericUpDown();
+            this.buttonGenerateNetwork = new System.Windows.Forms.Button();
+            this.buttonExportLabels = new System.Windows.Forms.Button();
             this.groupBoxNetworks.SuspendLayout();
             this.groupBoxNetworkStats.SuspendLayout();
             this.groupBoxCommunities.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxNetworkPlot)).BeginInit();
             this.groupBoxNetworkGenerator.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericNoNodes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericNoFundamentalNodes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericNoCreatedEdges)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoCreatedEdges)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoFundamentalNodes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoNodes)).BeginInit();
             this.SuspendLayout();
             // 
             // listNetworks
@@ -81,7 +81,7 @@
             // 
             // buttonLoadNetwork
             // 
-            this.buttonLoadNetwork.Location = new System.Drawing.Point(0, 293);
+            this.buttonLoadNetwork.Location = new System.Drawing.Point(6, 293);
             this.buttonLoadNetwork.Name = "buttonLoadNetwork";
             this.buttonLoadNetwork.Size = new System.Drawing.Size(101, 23);
             this.buttonLoadNetwork.TabIndex = 1;
@@ -91,8 +91,8 @@
             // 
             // groupBoxNetworks
             // 
+            this.groupBoxNetworks.Controls.Add(this.buttonExportLabels);
             this.groupBoxNetworks.Controls.Add(this.buttonExportToCsv);
-            this.groupBoxNetworks.Controls.Add(this.buttonExportNetworkToR);
             this.groupBoxNetworks.Controls.Add(this.checkBoxSkipFirstLine);
             this.groupBoxNetworks.Controls.Add(this.buttonDeleteNetwork);
             this.groupBoxNetworks.Controls.Add(this.listNetworks);
@@ -103,6 +103,16 @@
             this.groupBoxNetworks.TabIndex = 2;
             this.groupBoxNetworks.TabStop = false;
             this.groupBoxNetworks.Text = "Networks";
+            // 
+            // buttonExportToCsv
+            // 
+            this.buttonExportToCsv.Location = new System.Drawing.Point(6, 322);
+            this.buttonExportToCsv.Name = "buttonExportToCsv";
+            this.buttonExportToCsv.Size = new System.Drawing.Size(101, 23);
+            this.buttonExportToCsv.TabIndex = 7;
+            this.buttonExportToCsv.Text = "Export to CSV";
+            this.buttonExportToCsv.UseVisualStyleBackColor = true;
+            this.buttonExportToCsv.Click += new System.EventHandler(this.buttonExportToCsv_Click);
             // 
             // checkBoxSkipFirstLine
             // 
@@ -170,6 +180,16 @@
             this.groupBoxCommunities.TabStop = false;
             this.groupBoxCommunities.Text = "Communities";
             // 
+            // buttonCreateNetworkFromCommunity
+            // 
+            this.buttonCreateNetworkFromCommunity.Location = new System.Drawing.Point(126, 31);
+            this.buttonCreateNetworkFromCommunity.Name = "buttonCreateNetworkFromCommunity";
+            this.buttonCreateNetworkFromCommunity.Size = new System.Drawing.Size(164, 23);
+            this.buttonCreateNetworkFromCommunity.TabIndex = 6;
+            this.buttonCreateNetworkFromCommunity.Text = "Create network from community";
+            this.buttonCreateNetworkFromCommunity.UseVisualStyleBackColor = true;
+            this.buttonCreateNetworkFromCommunity.Click += new System.EventHandler(this.buttonCreateNetworkFromCommunity_Click);
+            // 
             // buttonRunIterativeSearch
             // 
             this.buttonRunIterativeSearch.Location = new System.Drawing.Point(6, 31);
@@ -217,36 +237,6 @@
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
             // 
-            // buttonCreateNetworkFromCommunity
-            // 
-            this.buttonCreateNetworkFromCommunity.Location = new System.Drawing.Point(126, 31);
-            this.buttonCreateNetworkFromCommunity.Name = "buttonCreateNetworkFromCommunity";
-            this.buttonCreateNetworkFromCommunity.Size = new System.Drawing.Size(164, 23);
-            this.buttonCreateNetworkFromCommunity.TabIndex = 6;
-            this.buttonCreateNetworkFromCommunity.Text = "Create network from community";
-            this.buttonCreateNetworkFromCommunity.UseVisualStyleBackColor = true;
-            this.buttonCreateNetworkFromCommunity.Click += new System.EventHandler(this.buttonCreateNetworkFromCommunity_Click);
-            // 
-            // buttonExportNetworkToR
-            // 
-            this.buttonExportNetworkToR.Location = new System.Drawing.Point(0, 322);
-            this.buttonExportNetworkToR.Name = "buttonExportNetworkToR";
-            this.buttonExportNetworkToR.Size = new System.Drawing.Size(101, 23);
-            this.buttonExportNetworkToR.TabIndex = 6;
-            this.buttonExportNetworkToR.Text = "Export to R";
-            this.buttonExportNetworkToR.UseVisualStyleBackColor = true;
-            this.buttonExportNetworkToR.Click += new System.EventHandler(this.buttonExportNetworkToR_Click);
-            // 
-            // buttonExportToCsv
-            // 
-            this.buttonExportToCsv.Location = new System.Drawing.Point(114, 322);
-            this.buttonExportToCsv.Name = "buttonExportToCsv";
-            this.buttonExportToCsv.Size = new System.Drawing.Size(101, 23);
-            this.buttonExportToCsv.TabIndex = 7;
-            this.buttonExportToCsv.Text = "Export to CSV";
-            this.buttonExportToCsv.UseVisualStyleBackColor = true;
-            this.buttonExportToCsv.Click += new System.EventHandler(this.buttonExportToCsv_Click);
-            // 
             // pictureBoxNetworkPlot
             // 
             this.pictureBoxNetworkPlot.Location = new System.Drawing.Point(583, 16);
@@ -273,15 +263,93 @@
             this.groupBoxNetworkGenerator.TabStop = false;
             this.groupBoxNetworkGenerator.Text = "Network generator";
             // 
-            // buttonGenerateNetwork
+            // labelV
             // 
-            this.buttonGenerateNetwork.Location = new System.Drawing.Point(139, 190);
-            this.buttonGenerateNetwork.Name = "buttonGenerateNetwork";
-            this.buttonGenerateNetwork.Size = new System.Drawing.Size(75, 23);
-            this.buttonGenerateNetwork.TabIndex = 0;
-            this.buttonGenerateNetwork.Text = "Generate";
-            this.buttonGenerateNetwork.UseVisualStyleBackColor = true;
-            this.buttonGenerateNetwork.Click += new System.EventHandler(this.buttonGenerateNetwork_Click);
+            this.labelV.AutoSize = true;
+            this.labelV.Location = new System.Drawing.Point(6, 97);
+            this.labelV.Name = "labelV";
+            this.labelV.Size = new System.Drawing.Size(14, 13);
+            this.labelV.TabIndex = 9;
+            this.labelV.Text = "V";
+            // 
+            // labelNoCreatedEdges
+            // 
+            this.labelNoCreatedEdges.AutoSize = true;
+            this.labelNoCreatedEdges.Location = new System.Drawing.Point(6, 73);
+            this.labelNoCreatedEdges.Name = "labelNoCreatedEdges";
+            this.labelNoCreatedEdges.Size = new System.Drawing.Size(76, 13);
+            this.labelNoCreatedEdges.TabIndex = 8;
+            this.labelNoCreatedEdges.Text = "Created edges";
+            // 
+            // labelNoFundamentalNodes
+            // 
+            this.labelNoFundamentalNodes.AutoSize = true;
+            this.labelNoFundamentalNodes.Location = new System.Drawing.Point(6, 45);
+            this.labelNoFundamentalNodes.Name = "labelNoFundamentalNodes";
+            this.labelNoFundamentalNodes.Size = new System.Drawing.Size(100, 13);
+            this.labelNoFundamentalNodes.TabIndex = 7;
+            this.labelNoFundamentalNodes.Text = "Fundamental nodes";
+            // 
+            // labelNoNodes
+            // 
+            this.labelNoNodes.AutoSize = true;
+            this.labelNoNodes.Location = new System.Drawing.Point(6, 21);
+            this.labelNoNodes.Name = "labelNoNodes";
+            this.labelNoNodes.Size = new System.Drawing.Size(38, 13);
+            this.labelNoNodes.TabIndex = 6;
+            this.labelNoNodes.Text = "Nodes";
+            // 
+            // numericV
+            // 
+            this.numericV.DecimalPlaces = 1;
+            this.numericV.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericV.Location = new System.Drawing.Point(145, 97);
+            this.numericV.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.numericV.Name = "numericV";
+            this.numericV.Size = new System.Drawing.Size(70, 20);
+            this.numericV.TabIndex = 5;
+            // 
+            // numericNoCreatedEdges
+            // 
+            this.numericNoCreatedEdges.Location = new System.Drawing.Point(144, 71);
+            this.numericNoCreatedEdges.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericNoCreatedEdges.Name = "numericNoCreatedEdges";
+            this.numericNoCreatedEdges.Size = new System.Drawing.Size(70, 20);
+            this.numericNoCreatedEdges.TabIndex = 4;
+            this.numericNoCreatedEdges.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // numericNoFundamentalNodes
+            // 
+            this.numericNoFundamentalNodes.Location = new System.Drawing.Point(145, 45);
+            this.numericNoFundamentalNodes.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericNoFundamentalNodes.Name = "numericNoFundamentalNodes";
+            this.numericNoFundamentalNodes.Size = new System.Drawing.Size(70, 20);
+            this.numericNoFundamentalNodes.TabIndex = 3;
+            this.numericNoFundamentalNodes.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // numericNoNodes
             // 
@@ -305,93 +373,25 @@
             0,
             0});
             // 
-            // numericNoFundamentalNodes
+            // buttonGenerateNetwork
             // 
-            this.numericNoFundamentalNodes.Location = new System.Drawing.Point(145, 45);
-            this.numericNoFundamentalNodes.Minimum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.numericNoFundamentalNodes.Name = "numericNoFundamentalNodes";
-            this.numericNoFundamentalNodes.Size = new System.Drawing.Size(70, 20);
-            this.numericNoFundamentalNodes.TabIndex = 3;
-            this.numericNoFundamentalNodes.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
+            this.buttonGenerateNetwork.Location = new System.Drawing.Point(139, 190);
+            this.buttonGenerateNetwork.Name = "buttonGenerateNetwork";
+            this.buttonGenerateNetwork.Size = new System.Drawing.Size(75, 23);
+            this.buttonGenerateNetwork.TabIndex = 0;
+            this.buttonGenerateNetwork.Text = "Generate";
+            this.buttonGenerateNetwork.UseVisualStyleBackColor = true;
+            this.buttonGenerateNetwork.Click += new System.EventHandler(this.buttonGenerateNetwork_Click);
             // 
-            // numericNoCreatedEdges
+            // buttonExportLabels
             // 
-            this.numericNoCreatedEdges.Location = new System.Drawing.Point(144, 71);
-            this.numericNoCreatedEdges.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericNoCreatedEdges.Name = "numericNoCreatedEdges";
-            this.numericNoCreatedEdges.Size = new System.Drawing.Size(70, 20);
-            this.numericNoCreatedEdges.TabIndex = 4;
-            this.numericNoCreatedEdges.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            // 
-            // numericV
-            // 
-            this.numericV.DecimalPlaces = 1;
-            this.numericV.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.numericV.Location = new System.Drawing.Point(145, 97);
-            this.numericV.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.numericV.Name = "numericV";
-            this.numericV.Size = new System.Drawing.Size(70, 20);
-            this.numericV.TabIndex = 5;
-            // 
-            // labelNoNodes
-            // 
-            this.labelNoNodes.AutoSize = true;
-            this.labelNoNodes.Location = new System.Drawing.Point(6, 21);
-            this.labelNoNodes.Name = "labelNoNodes";
-            this.labelNoNodes.Size = new System.Drawing.Size(38, 13);
-            this.labelNoNodes.TabIndex = 6;
-            this.labelNoNodes.Text = "Nodes";
-            // 
-            // labelNoFundamentalNodes
-            // 
-            this.labelNoFundamentalNodes.AutoSize = true;
-            this.labelNoFundamentalNodes.Location = new System.Drawing.Point(6, 45);
-            this.labelNoFundamentalNodes.Name = "labelNoFundamentalNodes";
-            this.labelNoFundamentalNodes.Size = new System.Drawing.Size(100, 13);
-            this.labelNoFundamentalNodes.TabIndex = 7;
-            this.labelNoFundamentalNodes.Text = "Fundamental nodes";
-            // 
-            // labelNoCreatedEdges
-            // 
-            this.labelNoCreatedEdges.AutoSize = true;
-            this.labelNoCreatedEdges.Location = new System.Drawing.Point(6, 73);
-            this.labelNoCreatedEdges.Name = "labelNoCreatedEdges";
-            this.labelNoCreatedEdges.Size = new System.Drawing.Size(76, 13);
-            this.labelNoCreatedEdges.TabIndex = 8;
-            this.labelNoCreatedEdges.Text = "Created edges";
-            // 
-            // labelV
-            // 
-            this.labelV.AutoSize = true;
-            this.labelV.Location = new System.Drawing.Point(6, 97);
-            this.labelV.Name = "labelV";
-            this.labelV.Size = new System.Drawing.Size(14, 13);
-            this.labelV.TabIndex = 9;
-            this.labelV.Text = "V";
+            this.buttonExportLabels.Location = new System.Drawing.Point(114, 322);
+            this.buttonExportLabels.Name = "buttonExportLabels";
+            this.buttonExportLabels.Size = new System.Drawing.Size(101, 23);
+            this.buttonExportLabels.TabIndex = 8;
+            this.buttonExportLabels.Text = "Export labels";
+            this.buttonExportLabels.UseVisualStyleBackColor = true;
+            this.buttonExportLabels.Click += new System.EventHandler(this.buttonExportLabels_Click);
             // 
             // MainForm
             // 
@@ -415,10 +415,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxNetworkPlot)).EndInit();
             this.groupBoxNetworkGenerator.ResumeLayout(false);
             this.groupBoxNetworkGenerator.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericNoNodes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericNoFundamentalNodes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericNoCreatedEdges)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoCreatedEdges)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoFundamentalNodes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericNoNodes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -443,7 +443,6 @@
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         private System.Windows.Forms.CheckBox checkBoxSkipFirstLine;
         private System.Windows.Forms.Button buttonCreateNetworkFromCommunity;
-        private System.Windows.Forms.Button buttonExportNetworkToR;
         private System.Windows.Forms.Button buttonExportToCsv;
         private System.Windows.Forms.PictureBox pictureBoxNetworkPlot;
         private System.Windows.Forms.GroupBox groupBoxNetworkGenerator;
@@ -456,6 +455,7 @@
         private System.Windows.Forms.Label labelNoCreatedEdges;
         private System.Windows.Forms.Label labelNoFundamentalNodes;
         private System.Windows.Forms.Label labelNoNodes;
+        private System.Windows.Forms.Button buttonExportLabels;
     }
 }
 
